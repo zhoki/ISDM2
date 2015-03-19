@@ -1,7 +1,17 @@
 <p id="notice"><%= notice %></p>
 
+<ul class="nav nav-tabs">
+  <li role="presentation" class="active"><%= link_to "Basic Info", project_path %></li>
+  <li role="presentation"><%= link_to "Status", "#a" %></li>
+  <li role="presentation"><%= link_to "Members", "#a" %></li>
+  <li role="presentation"><%= link_to "Documents", "#a" %></li>
+  <li role="presentation"><%= link_to "Assign Task", "#a" %></li>
+  <li role="presentation"><%= link_to "Tasks", "#a" %></li>
+</ul>
+
+<div class="panel-body">
 <p>
-  <strong>Name:</strong>
+  <strong>Project Name:</strong>
   <%= @project.name %>
 </p>
 
@@ -10,5 +20,13 @@
   <%= @project.description %>
 </p>
 
+<p>
+  <strong>Project Manager:</strong>
+  <%= @project.pm %>
+</p>
+
+
 <%= link_to 'Edit', edit_project_path(@project) %> |
 <%= link_to 'Back', projects_path %>
+</div>
+

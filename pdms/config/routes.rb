@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   
+  resources :document_histories
+
+  resources :document_templates
+
   resources :roles
 
   resources :projects

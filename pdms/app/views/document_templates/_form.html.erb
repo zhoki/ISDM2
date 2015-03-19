@@ -1,0 +1,52 @@
+<%= form_for(@document_template) do |f| %>
+  <% if @document_template.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@document_template.errors.count, "error") %> prohibited this document_template from being saved:</h2>
+
+      <ul>
+      <% @document_template.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name, 'Document Title:' %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :template, 'Please upload template document:' %><br>
+    <%= f.file_field :template %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<%= form_for(@document_history) do |f| %>
+    <% if @document_history.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@document_history.errors.count, "error") %> prohibited this document_history from being saved:</h2>
+
+          <ul>
+            <% @document_history.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :uploadedBy %><br>
+      <%= f.text_field :uploadedBy %>
+    </div>
+    <div class="field">
+      <%= f.label :versionNumber %><br>
+      <%= f.number_field :versionNumber %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+<% end %>
+

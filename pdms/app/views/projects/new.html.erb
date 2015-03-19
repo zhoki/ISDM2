@@ -1,5 +1,11 @@
-<h1>New project</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', projects_path %>
+<div class="col-md-6 col-md-offset-3">
+  <div class="panel panel-default">
+      <div class="panel-heading">
+         <strong><h3 class="panel-title">Create New project (PM only)</h3></strong>
+      </div>
+      <div class="panel-body">
+         <%= render 'form' %>
+         <%= link_to 'Back', projects_path, class: "btn btn-link"  %>
+       </div>
+   </div>
+</div>

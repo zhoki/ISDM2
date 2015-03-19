@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :role
+  has_and_belongs_to_many :project
 
   def admin?
     self.role_id == 1
@@ -12,10 +13,6 @@ class User < ActiveRecord::Base
 
   def set_default_role
    self.role_id == 3
-  end
-
-  def set_default_banned
-    self.banned == false
   end
 
 end

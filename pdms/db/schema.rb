@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150318030027) do
+ActiveRecord::Schema.define(version: 20150318132015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,11 +31,36 @@ ActiveRecord::Schema.define(version: 20150318030027) do
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
+  create_table "document_histories", force: true do |t|
+    t.string   "uploadedBy"
+    t.integer  "versionNumber"
+    t.string   "checksum"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "document_template_id"
+  end
+
+  create_table "document_templates", force: true do |t|
+    t.string   "name"
+    t.string   "template_file_name"
+    t.string   "template_content_type"
+    t.integer  "template_file_size"
+    t.datetime "template_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "projects", force: true do |t|
     t.string   "name"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "pm"
+  end
+
+  create_table "projects_users", id: false, force: true do |t|
+    t.integer "project_id", null: false
+    t.integer "user_id",    null: false
   end
 
   create_table "roles", force: true do |t|

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Uploadedby:</strong>
+  <%= @document_history.uploadedBy %>
+</p>
+
+<p>
+  <strong>Versionnumber:</strong>
+  <%= @document_history.versionNumber %>
+</p>
+
+<p>
+  <strong>Checksum:</strong>
+  <%= @document_history.checksum %>
+</p>
+
+<%= link_to 'Edit', edit_document_history_path(@document_history) %> |
+<%= link_to 'Back', document_histories_path %>

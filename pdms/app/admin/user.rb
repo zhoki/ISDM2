@@ -19,7 +19,7 @@ ActiveAdmin.register User do
    column :firstName
    column :lastName
    column :email
-   column :role_id
+   column :role
    column :sign_in_count
    column :last_sign_in_at
    column :created_at

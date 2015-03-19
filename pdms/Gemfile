@@ -29,8 +29,8 @@ gem 'bootstrap3-rails'
 gem 'bootstrap-sass-rails', '~> 2.2.2.0'
 gem 'devise'
 gem 'jquery-tokeninput-rails'
-gem 'searchkick'
 gem'activeadmin', :git => 'https://github.com/gregbell/active_admin.git'
+gem 'paperclip', '~> 3.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

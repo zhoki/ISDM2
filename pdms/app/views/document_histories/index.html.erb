@@ -1,0 +1,29 @@
+<h1>Listing document_histories</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Uploadedby</th>
+      <th>Versionnumber</th>
+      <th>Checksum</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @document_histories.each do |document_history| %>
+      <tr>
+        <td><%= document_history.uploadedBy %></td>
+        <td><%= document_history.versionNumber %></td>
+        <td><%= document_history.checksum %></td>
+        <td><%= link_to 'Show', document_history %></td>
+        <td><%= link_to 'Edit', edit_document_history_path(document_history) %></td>
+        <td><%= link_to 'Destroy', document_history, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Document history', new_document_history_path %>
