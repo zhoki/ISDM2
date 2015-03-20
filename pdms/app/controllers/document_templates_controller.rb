@@ -30,6 +30,7 @@ class DocumentTemplatesController < ApplicationController
   # POST /document_templates.json
   def create
     @document_template = DocumentTemplate.new(document_template_params)
+    @document_template.update_attribute('uploadedBy', current_user.firstName + " " + current_user.lastName)
 
     respond_to do |format|
       if @document_template.save
@@ -56,6 +57,11 @@ class DocumentTemplatesController < ApplicationController
     end
   end
 
+  #Download Template
+ # def download
+   #send_file(@document_template.template)
+  #end
+
   # DELETE /document_templates/1
   # DELETE /document_templates/1.json
   def destroy
@@ -74,6 +80,6 @@ class DocumentTemplatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def document_template_params
-      params.require(:document_template).permit(:name, :template)
+      params.require(:document_template).permit(:name, :template, :uploadedBy)
     end
 end

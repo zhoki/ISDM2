@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<ul class="nav nav-tabs">
+  <li role="presentation"><%= link_to "Basic Info", project_path %></li>
+  <li role="presentation"><%= link_to "Status", "#a" %></li>
+  <li role="presentation" class="active"><%= link_to "Members", member_path %></li>
+  <li role="presentation"><%= link_to "Documents", "#a" %></li>
+  <li role="presentation"><%= link_to "Assign Task", "#a" %></li>
+  <li role="presentation"><%= link_to "Tasks", "#a" %></li>
+</ul>
+
+<div class="panel-body">
+  <p>
+    <strong>Project Manager:</strong>
+    <%= @project.pm %>
+  </p>
+
+<%= @user %>
+  <%= form_tag :controller => "projects", :action => "member"  do %>
+      <div class="form-group">
+        <%= label :user_id, "Please select your team members:" %><br>
+        <% arr = User.where("role_id=3").map {|user| [user.firstName, user.id]} %>
+        <%= select_tag :user_id, options_for_select(arr) %>
+      </div>
+      <div class="actions">
+        <%= submit_tag "Confirm", :class => "btn btn-primary"%>
+      </div>
+  <% end %>
+
+  <%= link_to 'Back', projects_path %>
+</div>
+

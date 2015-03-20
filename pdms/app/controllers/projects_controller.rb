@@ -1,11 +1,12 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :member]
   before_filter :authenticate_user!, :except => [:index]
 
   # GET /projects
   # GET /projects.json
   def index
     @projects = Project.all
+    @users = User.all
   end
 
   # GET /projects/1
@@ -63,6 +64,18 @@ class ProjectsController < ApplicationController
     end
   end
 
+  # Get /projects/3/member
+  def member
+    @user = User.new
+    @project = Project.find(params[:id])
+    @user = User.find((params[:user_id].nil?)? params[:id] : params[:user_id])
+    if params[:user_id]
+      if @project.users << @user
+        flash[:notice] = 'User was saved.'
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
@@ -71,6 +84,6 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:name, :description, :pm)
+      params.require(:project).permit(:name, :description, :pm, :startDate, :dueDate, :user_id)
     end
 end

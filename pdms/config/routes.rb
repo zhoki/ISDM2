@@ -1,19 +1,26 @@
 Rails.application.routes.draw do
-  
-  resources :document_histories
 
-  resources :document_templates
-
-  resources :roles
-
-  resources :projects
-
-  ActiveAdmin.routes(self)  #resources :roles
+  ActiveAdmin.routes(self) 
 
   get '/users/sign_out' => 'devise/sessions#destroy'
   get 'admin/' => 'admin#index', as: 'admin'
   devise_for :users
-  resources :users  
+  resources :users
+  resources :projects 
+  
+  resources :roles
+  resources :document_histories
+
+  resources :document_templates 
+  #do
+   #get 'download', on: :document_template
+  #end
+
+  get 'projects/:id/member' => 'projects#member', as: :member
+  post 'projects/:id/member' => 'projects#member'
+
+
+ 
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

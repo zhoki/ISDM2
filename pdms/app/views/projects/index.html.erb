@@ -3,7 +3,7 @@
   <div class ="jumbotron">
     <h2>Project Management Document System - Group#2</h2>
     <h3>Our system aims to manage project plans and documents to support "Project Human Resource</br>
-      Management" process, which is one of Project Management Body Of Knowledge (PMBOK) </br>
+      Management" process, that is one of Project Management Body Of Knowledge (PMBOK) </br>
     </h3>
   </div>
 
@@ -14,8 +14,10 @@
     <tr>
       <th>Project Name</th>
       <th>Description</th>
+      <th>Start Date</th>
+      <th>Due Date</th>
       <th>Project Manager</th>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -24,6 +26,8 @@
       <tr>
         <td><%= project.name %></td>
         <td><%= project.description %></td>
+        <td><%= project.startDate %></td>
+        <td><%= project.dueDate %></td>
         <td><%= project.pm %></td>
         <td><%= link_to 'Show', project %></td>
         <% if current_user && current_user.role_id == 2 %>
