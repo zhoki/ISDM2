@@ -8,17 +8,19 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <div style="min-height: 40px; padding-left: 50px; background-image: url('pdms_small.png'); background-repeat: no-repeat;">
-        <%= link_to "PDMS", root_path, class: "navbar-brand" %>
+      <div class="navbar-brand" style="min-height: 40px; padding-left: 50px; background-image: url('pdms_small.png'); background-repeat: no-repeat;">
+        <%= link_to "PDMS", root_path %>
       </div>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><%= link_to "Project", projects_path %></li>
-        <li><%= link_to "Task", "#a" %></li>
-        <li><%= link_to "DocumentTemplete", document_templates_path %></li>
+        <% if user_signed_in? and not current_user.admin? %>
+          <li><%= link_to "Project", projects_path %></li>
+          <li><%= link_to "Task", "#a" %></li>
+          <li><%= link_to "DocumentTemplete", document_templates_path %></li>
+        <% end %>
       </ul>
 
       <div class="navbar-form navbar-left" role="search">
@@ -32,7 +34,7 @@
 
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
-            Welcome <%= current_user.firstName %>!
+            Welcome <%= current_user.firstName %> (<%= current_user.role.name.split.collect{|w| w[0]}.join %>)!
             <li><%= link_to 'Edit account', edit_user_registration_path %></li>
             <li><%= link_to "Sign-out", users_sign_out_path, :method => :delete %></li>
         <% else %>

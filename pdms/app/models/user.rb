@@ -12,4 +12,8 @@ class User < ActiveRecord::Base
     self.role_id == 1
   end
 
+  def project_manager?
+    self.role_id == 2    
+  end
+  
 end
