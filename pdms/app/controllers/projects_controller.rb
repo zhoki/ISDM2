@@ -66,16 +66,21 @@ class ProjectsController < ApplicationController
 
   # Get /projects/3/member
   def member
-    @project_users = ProjectUser.where(:project_id => params[:project_id])
+    @project_members = Project.find(params[:id]).users
 
-    @user = User.new
+    # @user = User.new
     @project = Project.find(params[:id])
     @user = User.find((params[:user_id].nil?)? params[:id] : params[:user_id])
     if params[:user_id]
-      if @project.users << @user
+      if @project.users << @user and @project.save
         flash[:notice] = 'User was saved.'
       end
     end
+  end
+
+  def remove_member
+    project_member = ProjectUser.where(project_id: params[:id], user_id: params[:userid]).delete_all
+    redirect_to :member
   end
 
   private

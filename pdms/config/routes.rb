@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   #end
 
   get 'projects/:id/member' => 'projects#member', as: :member
+  get 'projects/:id/member/remove_member' => 'projects#remove_member', as: :remove_member
   post 'projects/:id/member' => 'projects#member'
   post 'search/result'
   get 'search/result'

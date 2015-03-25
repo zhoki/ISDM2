@@ -10,27 +10,45 @@
 </ul>
 
 <div class="panel-body">
-  <p>
-    <strong>Project Manager:</strong>
-    <%= @project.pm %>
-  </p>
+  <div class="row">
+    <div class="col-sm-3 thumbnail">
+      <p>
+        <strong>Project Manager</strong>
+      </p>
+      <p>
+        <%= @project.pm %>
+      </p>
+    </div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-8 thumbnail" style="padding-left: ">
+      <strong>Team <%= @project_members.count > 1 ? 'member'.pluralize : 'member' %></strong>
 
-  <p>
-  <% @project_users.each do |pu| %>
-  <%= pu.user.firstName %>
-  <% end %>
-  </p>
+      <ul class="list-group">
+        <% @project_members.each do |member| %>
+          <li class="list-group-item">
+            <%= "#{member.firstName} #{member.lastName}" %>
+            <span style="float: right; vertical-align: middle;">
+            <%= link_to "Remove", { action: 'remove_member', userid: member.id }, class: 'btn btn-danger btn-xs' %>
+            </span>
+          </li>
+        <% end %>
+      </ul>
 
-  <%= form_tag :controller => "projects", :action => "member"  do %>
-      <div class="form-group">
-        <%= label :user_id, "Please select your team members:" %><br>
-        <% arr = User.where("role_id=3").map {|user| [user.firstName, user.id]} %>
-        <%= select_tag :user_id, options_for_select(arr) %>
-      </div>
-      <div class="actions">
-        <%= submit_tag "Confirm", :class => "btn btn-primary"%>
-      </div>
-  <% end %>
+      <%= form_tag :controller => "projects", :action => "member"  do %>
+        <div class="form-group">
+          <%= label :user_id, "Select team member to add:" %>
+          <% arr = User.where("role_id=3").where.not(id: (ProjectUser.where(project_id: params[:id]).collect {|_pu| _pu.user_id})).map {|user| [user.firstName, user.id]} %>
+          <%= select_tag :user_id, options_for_select(arr) %>
+
+          <%= submit_tag "Add", class: "btn btn-primary btn-xs", style: "margin-left: 10px;" %>
+        </div>
+          
+      <% end %>
+      
+    </div>
+  </div>
+
+  
 
   <%= link_to 'Back', projects_path %>
 </div>
