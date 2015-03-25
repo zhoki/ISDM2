@@ -3,7 +3,7 @@
 <ul class="nav nav-tabs">
   <li role="presentation" class="active"><%= link_to "Basic Info", project_path %></li>
   <li role="presentation"><%= link_to "Status", "#a" %></li>
-  <li role="presentation"><%= link_to "Members", member_path %></li>
+  <li role="presentation"><%= link_to "Members", member_path(:project_id => @project.id) %></li>
   <li role="presentation"><%= link_to "Documents", "#a" %></li>
   <li role="presentation"><%= link_to "Assign Task", "#a" %></li>
   <li role="presentation"><%= link_to "Tasks", "#a" %></li>

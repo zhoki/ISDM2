@@ -66,6 +66,8 @@ class ProjectsController < ApplicationController
 
   # Get /projects/3/member
   def member
+    @project_users = ProjectUser.where(:project_id => params[:project_id])
+
     @user = User.new
     @project = Project.find(params[:id])
     @user = User.find((params[:user_id].nil?)? params[:id] : params[:user_id])

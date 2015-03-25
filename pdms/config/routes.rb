@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  get 'search/index'
+
+  get 'search/result'
+
+  get 'search/search'
+
   ActiveAdmin.routes(self) 
 
   get '/users/sign_out' => 'devise/sessions#destroy'
@@ -18,6 +24,9 @@ Rails.application.routes.draw do
 
   get 'projects/:id/member' => 'projects#member', as: :member
   post 'projects/:id/member' => 'projects#member'
+  post 'search/result'
+  get 'search/result'
+
 
 
  
