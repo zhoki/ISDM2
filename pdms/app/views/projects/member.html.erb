@@ -37,7 +37,7 @@
       <%= form_tag :controller => "projects", :action => "member"  do %>
         <div class="form-group">
           <%= label :user_id, "Select team member to add:" %>
-          <% arr = User.where("role_id=3").where.not(id: (ProjectUser.where(project_id: params[:id]).collect {|_pu| _pu.user_id})).map {|user| [user.firstName, user.id]} %>
+          <% arr = @availableTeamMembers.map {|user| [user.firstName, user.id]} %>
           <%= select_tag :user_id, options_for_select(arr) %>
 
           <%= submit_tag "Add", class: "btn btn-primary btn-xs", style: "margin-left: 10px;" %>

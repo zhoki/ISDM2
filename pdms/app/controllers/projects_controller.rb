@@ -76,6 +76,8 @@ class ProjectsController < ApplicationController
         flash[:notice] = 'User was saved.'
       end
     end
+
+    @availableTeamMembers = User.where("role_id=3").where.not(id: (ProjectUser.where(project_id: params[:id]).collect {|_pu| _pu.user_id}))
   end
 
   def remove_member
