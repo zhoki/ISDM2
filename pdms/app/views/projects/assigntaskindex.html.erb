@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<ul class="nav nav-tabs">
+  <li role="presentation"><%= link_to "Basic Info", project_path %></li>
+  <li role="presentation"><%= link_to "Status", "#a" %></li>
+  <li role="presentation"><%= link_to "Members", member_path(:project_id => @project.id) %></li>
+  <li role="presentation"><%= link_to "Documents", "#a" %></li>
+  <li role="presentation" class="active"><%= link_to "Assign Task", assigntaskindex_path(project_id: @project.id) %></li>
+  <li role="presentation"><%= link_to "Tasks", "#a" %></li>
+</ul>
+
+<div class="panel-body">
+  <%= form_tag(controller: 'projects', action: 'createtask') do %>
+  <div class="form-group">
+    <label for="document" class="control-label">Document/Document Template: </label>
+    <% documentSelectItems = @documents.map {|doc| [doc.name, doc.id]} %>
+    <%= select_tag :doctmpl_id, options_for_select(documentSelectItems), class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <label for="remarks" class="control-label">Remarks: </label>
+    <%= text_field_tag "remark", "", placeholder: "Remarks", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <label for="approver" class="control-label">Approver</label>
+    <% pmItems = @pm.map {|user| [user.firstName + ' ' + user.lastName, user.id]} %>
+    <%= select_tag :approver_id, options_for_select(pmItems), class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <label for="assignee" class="control-label">Assignee</label>
+    <% assigneeItems = @teammembers.map {|user| [user.firstName + ' ' + user.lastName, user.id]} %>
+    <%= select_tag :assignee_id, options_for_select(assigneeItems), class: 'form-control' %>
+  </div>
+  
+  <div class="form-group">
+    <%= submit_tag "Assign task", class: "btn btn-primary", style: "margin-left: 10px;" %>
+  </div>
+<% end %>
+
+</div>

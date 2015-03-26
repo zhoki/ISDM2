@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :users
   resources :projects 
   resources :documents
+  resources :tasks
   
   resources :roles
 resources :document_templates do
@@ -27,6 +28,8 @@ end
 
 
   get 'projects/:id/member' => 'projects#member', as: :member
+  get 'projects/:id/assigntask' => 'projects#assigntaskindex', as: :assigntaskindex
+  get 'projects/:id/createtask' => 'projects#createtask', as: :createtask
   get 'projects/:id/member/remove_member' => 'projects#remove_member', as: :remove_member
   post 'projects/:id/member' => 'projects#member'
   post 'search/result'

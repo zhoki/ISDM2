@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :member]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :member, :assigntaskindex]
   before_filter :authenticate_user!, :except => [:index]
 
   # GET /projects
@@ -38,6 +38,16 @@ class ProjectsController < ApplicationController
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def assigntaskindex
+    @documents = DocumentTemplate.all
+    @pm = User.where('"firstName" || \' \' || "lastName" = ?', @project.pm)
+    @teammembers = @project.users
+  end
+
+  def createtask
+    redirect_to 'assigntaskindex'
   end
 
   # PATCH/PUT /projects/1
