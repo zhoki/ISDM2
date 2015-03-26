@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :documents
+
   resources :tasks
 
   get 'search/index'
@@ -14,11 +16,9 @@ Rails.application.routes.draw do
   get 'admin/' => 'admin#index', as: 'admin'
   devise_for :users
   resources :users
-  resources :projects 
-  resources :documents
-  resources :roles
-  resources :document_histories
 
+  resources :projects  
+  resources :roles
   resources :document_templates 
   #do
    #get 'download', on: :document_template
