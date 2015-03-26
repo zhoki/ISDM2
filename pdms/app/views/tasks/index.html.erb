@@ -1,9 +1,11 @@
-<h1>Listing tasks</h1>
+<h1>Tasks assigned to <%= "#{@user.firstName} #{@user.lastName}" %></h1>
 
-<table class="table">
+<% @projects.each do |project| %>
+  <table class="table">
+  <caption><%= project.name %></caption>
   <thead>
     <tr>
-      <th>Assignedon</th>
+      <th>AssignedOn</th>
       <th>Project</th>
       <th>Document</th>
       <th>Approver</th>
@@ -14,7 +16,8 @@
   </thead>
 
   <tbody>
-    <% @tasks.each do |task| %>
+    <% tasks = Task.where project_id: project.id, assignee_id: @user.id %>
+    <% tasks.each do |task| %>
       <tr>
         <td><%= task.assignedOn %></td>
         <td><%= task.project.name %></td>
@@ -34,6 +37,9 @@
     <% end %>
   </tbody>
 </table>
+
+<% end %>
+
 
 <br>
 
