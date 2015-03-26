@@ -70,7 +70,7 @@ class ProjectsController < ApplicationController
 
     task.save
 
-    redirect_to action: :assigntaskindex
+    redirect_to action: :tasks
   end
 
   def tasks
