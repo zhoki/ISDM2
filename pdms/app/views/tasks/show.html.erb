@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Assignedon:</strong>
   <%= @task.assignedOn %>
@@ -7,22 +5,24 @@
 
 <p>
   <strong>Project:</strong>
-  <%= @task.project %>
+  <%= @task.project.name %>
 </p>
 
 <p>
   <strong>Document:</strong>
-  <%= @task.document %>
+  <%= @task.document_template.name %>
 </p>
 
 <p>
   <strong>Approver:</strong>
-  <%= @task.approver_id %>
+  <%= @task.approver.firstName %>
+  <%= @task.approver.lastName %>
 </p>
 
 <p>
   <strong>Assignnee:</strong>
-  <%= @task.assignee_id %>
+  <%= @task.assignee.firstName %>
+  <%= @task.assignee.lastName %>
 </p>
 
 <p>

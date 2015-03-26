@@ -10,15 +10,9 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :project_id %><br>
-    <%= f.text_field :project_id %>
-  </div>
-  <div class="field">
-    <%= f.label :document_template_id %><br>
-    <%= f.text_field :document_template_id %>
-  </div>
+    <%= hidden_field_tag :proj_id, @project.id %>
+    <%= hidden_field_tag :doctmpl_id, @doctmpl.id %>
+    <%= hidden_field_tag :user_id, current_user.id %>
   <div class="field">
     <%= f.label :docFile %><br>
     <%= f.file_field :docFile %>

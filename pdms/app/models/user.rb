@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 
   belongs_to :role
   has_and_belongs_to_many :projects
+  has_many :documents
   has_many :project_users
   has_many :document_templates
   has_many :tasks, :class_name => "task", :foreign_key => "approver_id"

@@ -15,6 +15,8 @@ class DocumentsController < ApplicationController
   # GET /documents/new
   def new
     @document = Document.new
+    @project = Project.find params[:proj_id]
+    @doctmpl = DocumentTemplate.find params[:doctmpl_id]
   end
 
   # GET /documents/1/edit
@@ -25,7 +27,9 @@ class DocumentsController < ApplicationController
   # POST /documents.json
   def create
     @document = Document.new(document_params)
-    #@document.update_attribute('name', )
+    @document.update_attribute('project_id', params[:proj_id])
+    @document.update_attribute('document_template_id', params[:doctmpl_id])
+    @document.update_attribute('user_id', current_user.id)
 
     respond_to do |format|
       if @document.save

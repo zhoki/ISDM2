@@ -41,6 +41,8 @@ end
   post 'search/result'
   get 'search/result'
 
+  get 'documents/new/:proj_id/:doctmpl_id' => 'documents#new', as: :newdocument
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

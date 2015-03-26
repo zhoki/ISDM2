@@ -2,17 +2,23 @@
 
 <p>
   <strong>Project:</strong>
-  <%= @document.project %>
+  <%= @document.project.name %>
 </p>
 
 <p>
   <strong>Document template:</strong>
-  <%= @document.document_template %>
+  <%= @document.document_template.name %>
 </p>
 
 <p>
-  <strong>Docfile:</strong>
-  <%= @document.docFile %>
+  <strong>Author:</strong>
+  <%= @document.user_id.firstName %>
+</p>
+  <strong>File:</strong>
+  <%= @document.docFile_file_name %>
+<p>
+
+
 </p>
 
 <%= link_to 'Edit', edit_document_path(@document) %> |

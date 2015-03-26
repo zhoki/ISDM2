@@ -7,6 +7,7 @@ class TasksController < ApplicationController
     @tasks = Task.all
     @projects = Project.all
     @users = User.all
+    @documents = Document.all
   end
 
   # GET /tasks/1
@@ -18,6 +19,7 @@ class TasksController < ApplicationController
   def new
     @task = Task.new
     @project = Project.new
+    @document = Document.new
   end
 
   # GET /tasks/1/edit
@@ -72,6 +74,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:assignedOn, :project_id, :document_id, :approver_id, :assignee_id, :status)
+      params.require(:task).permit(:assignedOn, :project_id, :document_template_id, :approver_id, :assignee_id, :status)
     end
 end
