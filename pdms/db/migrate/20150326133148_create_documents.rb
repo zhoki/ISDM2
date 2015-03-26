@@ -3,6 +3,7 @@ class CreateDocuments < ActiveRecord::Migration
     create_table :documents do |t|
       t.references :project, index: true
       t.references :document_template, index: true
+      t.attachment :docFile
 
       t.timestamps
     end

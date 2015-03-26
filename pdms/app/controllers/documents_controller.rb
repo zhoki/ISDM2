@@ -25,6 +25,7 @@ class DocumentsController < ApplicationController
   # POST /documents.json
   def create
     @document = Document.new(document_params)
+    #@document.update_attribute('name', )
 
     respond_to do |format|
       if @document.save
@@ -69,6 +70,6 @@ class DocumentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def document_params
-      params.require(:document).permit(:title, :user_id, :file, :document_template_id)
+      params.require(:document).permit(:project_id, :document_template_id, :docFile)
     end
 end

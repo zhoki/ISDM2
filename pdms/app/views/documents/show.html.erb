@@ -1,23 +1,18 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Title:</strong>
-  <%= @document.title %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @document.user_id %>
-</p>
-
-<p>
-  <strong>File:</strong>
-  <%= @document.file %>
+  <strong>Project:</strong>
+  <%= @document.project %>
 </p>
 
 <p>
   <strong>Document template:</strong>
   <%= @document.document_template %>
+</p>
+
+<p>
+  <strong>Docfile:</strong>
+  <%= @document.docFile %>
 </p>
 
 <%= link_to 'Edit', edit_document_path(@document) %> |
