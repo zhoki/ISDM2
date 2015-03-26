@@ -5,13 +5,15 @@
   <li role="presentation"><%= link_to "Status", "#a" %></li>
   <li role="presentation" class="active"><%= link_to "Members", member_path %></li>
   <li role="presentation"><%= link_to "Documents", "#a" %></li>
-  <li role="presentation"><%= link_to "Assign Task", assigntaskindex_path(project_id: @project.id) %></li>
-  <li role="presentation"><%= link_to "Tasks", "#a" %></li>
+  <% if current_user.project_manager? %>
+    <li role="presentation"><%= link_to "Assign Task", assigntaskindex_path(project_id: @project.id) %></li>
+    <li role="presentation"><%= link_to "Tasks", tasklist_path(project_id: @project.id) %></li>
+  <% end %>
 </ul>
 
 <div class="panel-body">
   <div class="row">
-    <div class="col-sm-3 thumbnail">
+    <div class="col-sm-3">
       <p>
         <strong>Project Manager</strong>
       </p>
@@ -20,29 +22,33 @@
       </p>
     </div>
     <div class="col-sm-1"></div>
-    <div class="col-sm-8 thumbnail" style="padding-left: ">
+    <div class="col-sm-8" style="padding-left: ">
       <strong>Team <%= @project_members.count > 1 ? 'member'.pluralize : 'member' %></strong>
 
       <ul class="list-group">
         <% @project_members.each do |member| %>
           <li class="list-group-item">
             <%= "#{member.firstName} #{member.lastName}" %>
-            <span style="float: right; vertical-align: middle;">
-            <%= link_to "Remove", { action: 'remove_member', userid: member.id }, class: 'btn btn-danger btn-xs' %>
-            </span>
+            <% if current_user.project_manager? %>
+              <span style="float: right; vertical-align: middle;">
+                <%= link_to "Remove", { action: 'remove_member', userid: member.id }, class: 'btn btn-danger btn-xs' %>
+              </span>
+            <% end %>
           </li>
         <% end %>
       </ul>
 
-      <%= form_tag :controller => "projects", :action => "member"  do %>
-        <div class="form-group">
-          <%= label :user_id, "Select team member to add:" %>
-          <% arr = @availableTeamMembers.map {|user| [user.firstName, user.id]} %>
-          <%= select_tag :user_id, options_for_select(arr) %>
+      <% if current_user.project_manager? %>
+        <%= form_tag :controller => "projects", :action => "member"  do %>
+          <div class="form-group">
+            <%= label :user_id, "Select team member to add:" %>
+            <% arr = @availableTeamMembers.map {|user| [user.firstName, user.id]} %>
+            <%= select_tag :user_id, options_for_select(arr) %>
 
-          <%= submit_tag "Add", class: "btn btn-primary btn-xs", style: "margin-left: 10px;" %>
-        </div>
-          
+            <%= submit_tag "Add", class: "btn btn-primary btn-xs", style: "margin-left: 10px;" %>
+          </div>
+            
+        <% end %>
       <% end %>
       
     </div>

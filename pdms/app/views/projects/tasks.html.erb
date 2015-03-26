@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<ul class="nav nav-tabs">
+  <li role="presentation"><%= link_to "Basic Info", project_path %></li>
+  <li role="presentation"><%= link_to "Status", "#a" %></li>
+  <li role="presentation"><%= link_to "Members", member_path(:project_id => @project.id) %></li>
+  <li role="presentation"><%= link_to "Documents", "#a" %></li>
+  <% if current_user.project_manager? %>
+    <li role="presentation"><%= link_to "Assign Task", assigntaskindex_path(project_id: @project.id) %></li>
+    <li role="presentation"><%= link_to "Tasks", tasklist_path(project_id: @project.id) %></li>
+  <% end %>
+</ul>
+
+<div class="panel-body">
+  <div class="col-md-12">
+    <table class="table">
+      <caption>Task list of project "<%= @project.name %>"</caption>
+      <thead>
+        <tr>
+          <th>Task ID</th>
+          <th>Assigned On</th>
+          <th>Document</th>
+          <th>Approver</th>
+          <th>Assignee</th>
+          <th>Status</th>
+          <th>Commands</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <td><%= task.id %></td>
+          <td><%= task.assignedOn %></td>
+          <td><%= task.document_template.name %></td>
+          <td><%= "#{task.approver.firstName} #{task.approver.lastName}" %></td>
+          <td><%= "#{task.assignee.firstName} #{task.assignee.lastName}" %></td>
+          <td><%= task.status %></td>
+          <td>
+            <%= link_to '(Edit Task) ', action: 'edittask', id: @project.id, taskid: task.id %>
+            (Feedback)
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

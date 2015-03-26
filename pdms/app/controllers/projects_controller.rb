@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :member, :assigntaskindex]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :member, :assigntaskindex, :createtask, :tasks, :edittask]
   before_filter :authenticate_user!, :except => [:index]
 
   # GET /projects
@@ -47,7 +47,48 @@ class ProjectsController < ApplicationController
   end
 
   def createtask
-    redirect_to 'assigntaskindex'
+    doctmpl_id = params[:doctmpl_id]
+    doctmpl = DocumentTemplate.find doctmpl_id
+
+    remark = params[:remark]
+
+    approver_id = params[:approver_id]
+    approver = User.find approver_id
+
+    assignee_id = params[:assignee_id]
+    assignee = User.find assignee_id
+
+    currentDate = Date.parse(Time.now.to_s)
+
+    task = Task.new
+    task.project = @project
+    task.assignedOn = currentDate
+    task.approver = approver
+    task.assignee = assignee
+    task.document_template = doctmpl
+    task.remarks = remark
+
+    task.save
+
+    redirect_to action: :assigntaskindex
+  end
+
+  def tasks
+    @tasks = Task.where(project_id: @project.id).order('document_template_id ASC, id ASC')
+  end
+
+  def edittask
+    @task = Task.find params[:taskid]
+    @teammembers = @project.users
+  end
+
+  def updatetask
+    task = Task.find params[:taskid]
+    newAssignee = User.find params[:assignee_id]
+
+    task.assignee = newAssignee
+    task.save
+    redirect_to action: 'tasks'
   end
 
   # PATCH/PUT /projects/1

@@ -1,0 +1,26 @@
+<div class="panel-body">
+  <%= form_tag(controller: 'projects', action: 'updatetask', method: 'post') do %>
+  <%= hidden_field_tag :taskid, @task.id %>
+  <div class="form-group">
+    <label for="document" class="control-label">Document/Document Template: </label>
+    <p class="form-control-static"><%= @task.document_template.name %></p>
+  </div>
+  <div class="form-group">
+    <label for="remarks" class="control-label">Remarks: </label>
+    <p class="form-control-static"><%= @task.remarks %></p>
+  </div>
+  <div class="form-group">
+    <label for="approver" class="control-label">Approver</label>
+    <p class="form-control-static"><%= "#{@task.approver.firstName} #{@task.approver.lastName}" %></p>
+  </div>
+  <div class="form-group">
+    <label for="assignee" class="control-label">Assignee</label>
+    <% assigneeItems = @teammembers.map {|user| [user.firstName + ' ' + user.lastName, user.id]} %>
+    <%= select_tag :assignee_id, options_for_select(assigneeItems), class: 'form-control' %>
+  </div>
+  
+  <div class="form-group">
+    <%= submit_tag "Update task", class: "btn btn-primary", style: "margin-left: 10px;" %>
+  </div>
+  <% end %>
+</div>

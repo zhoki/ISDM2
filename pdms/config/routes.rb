@@ -29,10 +29,13 @@ Rails.application.routes.draw do
   end
 end
 
-
+  #get 'assigntaskindex' => 'projects#createtask'
   get 'projects/:id/member' => 'projects#member', as: :member
   get 'projects/:id/assigntask' => 'projects#assigntaskindex', as: :assigntaskindex
-  get 'projects/:id/createtask' => 'projects#createtask', as: :createtask
+  get 'projects/:id/tasks' => 'projects#tasks', as: :tasklist
+  get 'projects/:id/edittask/:taskid' => 'projects#edittask', as: :edittask
+  post 'projects/:id/updatetask' => 'projects#updatetask', as: :updatetask
+  post 'projects/:id/createtask' => 'projects#createtask', as: :createtask
   get 'projects/:id/member/remove_member' => 'projects#remove_member', as: :remove_member
   post 'projects/:id/member' => 'projects#member'
   post 'search/result'
