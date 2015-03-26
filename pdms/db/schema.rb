@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150326100431) do
+ActiveRecord::Schema.define(version: 20150326115400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,13 +89,15 @@ ActiveRecord::Schema.define(version: 20150326100431) do
     t.date     "assignedOn"
     t.integer  "project_id"
     t.integer  "document_id"
-    t.string   "approver"
-    t.string   "assignnee"
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "approver_id"
+    t.integer  "assignee_id"
   end
 
+  add_index "tasks", ["approver_id"], name: "index_tasks_on_approver_id", using: :btree
+  add_index "tasks", ["assignee_id"], name: "index_tasks_on_assignee_id", using: :btree
   add_index "tasks", ["document_id"], name: "index_tasks_on_document_id", using: :btree
   add_index "tasks", ["project_id"], name: "index_tasks_on_project_id", using: :btree
 

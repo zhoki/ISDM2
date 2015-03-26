@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :projects
   has_many :project_users
   has_many :document_templates
+  has_many :tasks, :class_name => "task", :foreign_key => "approver_id"
+  has_many :tasks, :class_name => "task", :foreign_key => "assignee_id"
 
   def admin?
     self.role_id == 1
