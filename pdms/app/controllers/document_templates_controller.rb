@@ -17,9 +17,6 @@ class DocumentTemplatesController < ApplicationController
   # GET /document_templates/new
   def new
     @document_template = DocumentTemplate.new
-    if @document_history.nil?
-      @document_history = DocumentHistory.new
-    end
   end
 
   # GET /document_templates/1/edit

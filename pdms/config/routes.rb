@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :documents
-
-  resources :tasks
-
   get 'search/index'
 
   get 'search/result'
@@ -16,13 +12,19 @@ Rails.application.routes.draw do
   get 'admin/' => 'admin#index', as: 'admin'
   devise_for :users
   resources :users
-
-  resources :projects  
+  resources :projects 
+  resources :documents
+  
   resources :roles
-  resources :document_templates 
-  #do
-   #get 'download', on: :document_template
-  #end
+resources :document_templates do
+  resources :versions, only: [:destroy] do
+    member do
+      get :diff, to: 'versions#diff'
+      patch :rollback, to: 'versions#rollback'
+    end
+  end
+end
+
 
   get 'projects/:id/member' => 'projects#member', as: :member
   get 'projects/:id/member/remove_member' => 'projects#remove_member', as: :remove_member

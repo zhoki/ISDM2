@@ -1,9 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  project_id: 
+  title: MyString
+  user_id: 1
+  file: 
   document_template_id: 
 
 two:
-  project_id: 
+  title: MyString
+  user_id: 1
+  file: 
   document_template_id: 

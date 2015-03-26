@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150326100431) do
+ActiveRecord::Schema.define(version: 20150325184025) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,14 +53,18 @@ ActiveRecord::Schema.define(version: 20150326100431) do
   end
 
   create_table "documents", force: true do |t|
-    t.integer  "project_id"
+    t.string   "title"
+    t.integer  "user_id"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
     t.integer  "document_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "documents", ["document_template_id"], name: "index_documents_on_document_template_id", using: :btree
-  add_index "documents", ["project_id"], name: "index_documents_on_project_id", using: :btree
 
   create_table "projects", force: true do |t|
     t.string   "name"
@@ -84,20 +88,6 @@ ActiveRecord::Schema.define(version: 20150326100431) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "tasks", force: true do |t|
-    t.date     "assignedOn"
-    t.integer  "project_id"
-    t.integer  "document_id"
-    t.string   "approver"
-    t.string   "assignnee"
-    t.string   "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "tasks", ["document_id"], name: "index_tasks_on_document_id", using: :btree
-  add_index "tasks", ["project_id"], name: "index_tasks_on_project_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
