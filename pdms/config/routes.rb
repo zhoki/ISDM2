@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :documents
+
   get 'search/index'
 
   get 'search/result'
@@ -17,7 +19,8 @@ Rails.application.routes.draw do
   resources :tasks
   
   resources :roles
-resources :document_templates do
+
+  resources :document_templates do
   resources :versions, only: [:destroy] do
     member do
       get :diff, to: 'versions#diff'
@@ -35,9 +38,6 @@ end
   post 'search/result'
   get 'search/result'
 
-
-
- 
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

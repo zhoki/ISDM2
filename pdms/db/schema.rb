@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150326130049) do
+ActiveRecord::Schema.define(version: 20150326142326) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,15 +31,6 @@ ActiveRecord::Schema.define(version: 20150326130049) do
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
-  create_table "document_histories", force: true do |t|
-    t.string   "uploadedBy"
-    t.integer  "versionNumber"
-    t.string   "checksum"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "document_template_id"
-  end
-
   create_table "document_templates", force: true do |t|
     t.string   "name"
     t.string   "template_file_name"
@@ -55,6 +46,10 @@ ActiveRecord::Schema.define(version: 20150326130049) do
   create_table "documents", force: true do |t|
     t.integer  "project_id"
     t.integer  "document_template_id"
+    t.string   "docFile_file_name"
+    t.string   "docFile_content_type"
+    t.integer  "docFile_file_size"
+    t.datetime "docFile_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -88,18 +83,21 @@ ActiveRecord::Schema.define(version: 20150326130049) do
   create_table "tasks", force: true do |t|
     t.date     "assignedOn"
     t.integer  "project_id"
-    t.integer  "document_id"
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "approver_id"
     t.integer  "assignee_id"
+<<<<<<< HEAD
     t.string   "remarks"
+=======
+    t.integer  "document_template_id"
+>>>>>>> 628011beaa7bb01a01abb926595c7e13f48d0d4f
   end
 
   add_index "tasks", ["approver_id"], name: "index_tasks_on_approver_id", using: :btree
   add_index "tasks", ["assignee_id"], name: "index_tasks_on_assignee_id", using: :btree
-  add_index "tasks", ["document_id"], name: "index_tasks_on_document_id", using: :btree
+  add_index "tasks", ["document_template_id"], name: "index_tasks_on_document_template_id", using: :btree
   add_index "tasks", ["project_id"], name: "index_tasks_on_project_id", using: :btree
 
   create_table "users", force: true do |t|

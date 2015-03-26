@@ -11,23 +11,19 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
+  <div class="field">
+    <%= f.label :project_id %><br>
+    <%= f.text_field :project_id %>
   </div>
-  <div class="form-group">
-    <%= f.label :user_id %><br>
-    <%= f.number_field :user_id %>
-  </div>
-  <div class="form-group">
+  <div class="field">
     <%= f.label :document_template_id %><br>
     <%= f.text_field :document_template_id %>
   </div>
-  <div class="form-group">
-    <%= f.label :file, 'Please select a document to upload:' %><br>
-    <%= f.file_field :file %>
+  <div class="field">
+    <%= f.label :docFile %><br>
+    <%= f.file_field :docFile %>
   </div>
   <div class="actions">
-    <%= f.submit "Confirm", :class => "btn btn-primary"%>
+    <%= f.submit %>
   </div>
 <% end %>
