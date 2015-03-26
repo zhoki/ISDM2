@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
   resources :projects 
-  
+  resources :documents
   resources :roles
   resources :document_histories
 
