@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  assignedOn: 
+  project_id: 
+  document_id: 
+  approver: MyString
+  assignnee: MyString
+  status: MyString
+
+two:
+  assignedOn: 
+  project_id: 
+  document_id: 
+  approver: MyString
+  assignnee: MyString
+  status: MyString
