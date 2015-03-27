@@ -122,8 +122,9 @@ class ProjectsController < ApplicationController
 
     # @user = User.new
     @project = Project.find(params[:id])
-    @user = User.find((params[:user_id].nil?)? params[:id] : params[:user_id])
+
     if params[:user_id]
+      @user = User.find(params[:user_id])
       if @project.users << @user and @project.save
         flash[:notice] = 'User was saved.'
       end
