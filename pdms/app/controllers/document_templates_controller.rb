@@ -77,6 +77,6 @@ class DocumentTemplatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def document_template_params
-      params.require(:document_template).permit(:name, :template, :uploadedBy)
+      params.require(:document_template).permit(:name, :template, :uploadedBy, :user_id)
     end
 end

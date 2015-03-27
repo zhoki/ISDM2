@@ -1,5 +1,4 @@
-<p id="notice"><%= notice %></p>
-
+<div class="panel-body">
 <p>
   <strong>Name:</strong>
   <%= @document_template.name %>
@@ -7,8 +6,9 @@
 
 <p>
   <strong>Template:</strong>
-  <%= @document_template.template %>
+  <%= @document_template.template_file_name %>
 </p>
 
 <%= link_to 'Edit', edit_document_template_path(@document_template) %> |
 <%= link_to 'Back', document_templates_path %>
+</div>

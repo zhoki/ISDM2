@@ -16,9 +16,11 @@
         <td><%= document_template.name %></td>
         <td><%= document_template.created_at.strftime("%-d/%-m/%-Y") %></td>
         <td><%= document_template.uploadedBy %></td>
+        <% if current_user && current_user.role_id == 2 %>
         <td><%= link_to 'Show', document_template %></td>
         <td><%= link_to 'Edit', edit_document_template_path(document_template) %></td>
         <td><%= link_to 'Destroy', document_template, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
         <td><%= link_to 'Download', DocumentTemplate.find(document_template.id).template.url(:original, false) %>
       </tr>
     <% end %>

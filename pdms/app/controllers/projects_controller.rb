@@ -117,6 +117,7 @@ class ProjectsController < ApplicationController
 
   # Get /projects/3/member
   def member
+
     @project_members = Project.find(params[:id]).users
 
     # @user = User.new

@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Project:</strong>
   <%= @document.project.name %>
@@ -12,7 +10,8 @@
 
 <p>
   <strong>Author:</strong>
-  <%= @document.user_id.firstName %>
+  <%= @document.user.firstName %>
+  <%= @document.user.lastName %>
 </p>
   <strong>File:</strong>
   <%= @document.docFile_file_name %>

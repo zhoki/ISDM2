@@ -1,15 +1,8 @@
 class DocumentTemplate < ActiveRecord::Base
 
 belongs_to :user
-has_many :tasks
-has_many :documents
+has_many :tasks, dependent: :destroy
+has_many :documents, dependent: :destroy
 has_attached_file :template
-
-has_paper_trail
-
-  def user_name
-    user ? user.name : ''
-  end
-
 
 end

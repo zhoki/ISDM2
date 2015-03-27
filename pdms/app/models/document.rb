@@ -5,5 +5,10 @@ class Document < ActiveRecord::Base
 
   has_attached_file :docFile
 
-  
+  has_paper_trail
+
+  def user_name
+    user ? user.firstName : ''
+  end
+
 end

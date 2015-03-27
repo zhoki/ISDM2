@@ -1,5 +1,4 @@
 <h2>Previous Versions</h2>
-
 <table class='table'>
   <thead>
   <tr>
@@ -14,14 +13,14 @@
   </thead>
 
   <tbody>
-  <%- document_template.versions.reverse.each do |version| %>
+  <%- document.versions.reverse.each do |version| %>
       <tr>
         <td><%= version.index %></td>
-        <td><%= version.created_at %></td>
+        <td><%= version.created_at.strftime("%-d/%-m/%-Y (%I:%M:%P)") %></td>
         <td><%= find_version_author_name(version) %></td>
         <td><%= version.event.humanize %></td>
-        <td><%= link_to 'Diff', " " %></td>
-        <td><%= link_to 'Rollback', rollback_document_template_version_path(document_template, version), method: 'PATCH' %></td>
+
+        <td><%= link_to 'Rollback', rollback_document_version_path(document, version), method: 'PATCH' %></td>
       </tr>
   <% end %>
   </tbody>

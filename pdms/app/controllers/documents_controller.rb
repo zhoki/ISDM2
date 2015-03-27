@@ -21,6 +21,8 @@ class DocumentsController < ApplicationController
 
   # GET /documents/1/edit
   def edit
+    @project = Project.find params[:proj_id]
+    @doctmpl = DocumentTemplate.find params[:doctmpl_id]
   end
 
   # POST /documents
@@ -74,6 +76,6 @@ class DocumentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def document_params
-      params.require(:document).permit(:project_id, :document_template_id, :docFile)
+      params.require(:document).permit(:project_id, :document_template_id, :docFile, :user_id)
     end
 end

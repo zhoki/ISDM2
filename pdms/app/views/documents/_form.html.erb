@@ -14,7 +14,7 @@
     <%= hidden_field_tag :doctmpl_id, @doctmpl.id %>
     <%= hidden_field_tag :user_id, current_user.id %>
   <div class="field">
-    <%= f.label :docFile %><br>
+    <%= f.label :docFile, "Please upload file:" %><br>
     <%= f.file_field :docFile %>
   </div>
   <div class="actions">

@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :documents
-
   get 'search/index'
 
   get 'search/result'
@@ -15,12 +13,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
   resources :projects 
-  resources :documents
-  resources :tasks
-  
-  resources :roles
-
-  resources :document_templates do
+   resources :documents do
   resources :versions, only: [:destroy] do
     member do
       get :diff, to: 'versions#diff'
@@ -29,19 +22,30 @@ Rails.application.routes.draw do
   end
 end
 
+  resources :tasks
+  
+  resources :roles
+
+  resources :document_templates
+
   #get 'assigntaskindex' => 'projects#createtask'
   get 'projects/:id/member' => 'projects#member', as: :member
+  post 'projects/:id/member' => 'projects#member'
   get 'projects/:id/assigntask' => 'projects#assigntaskindex', as: :assigntaskindex
   get 'projects/:id/tasks' => 'projects#tasks', as: :tasklist
   get 'projects/:id/edittask/:taskid' => 'projects#edittask', as: :edittask
   post 'projects/:id/updatetask' => 'projects#updatetask', as: :updatetask
   post 'projects/:id/createtask' => 'projects#createtask', as: :createtask
   get 'projects/:id/member/remove_member' => 'projects#remove_member', as: :remove_member
-  post 'projects/:id/member' => 'projects#member'
   post 'search/result'
   get 'search/result'
 
   get 'documents/new/:proj_id/:doctmpl_id' => 'documents#new', as: :newdocument
+  get 'documents/edit/:proj_id/:id/:doctmpl_id' => 'documents#edit', as: :editdocument
+  post 'documents/edit/:proj_id/:id/:doctmpl_id' => 'documents#edit'
+
+ 
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.
