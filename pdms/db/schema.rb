@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150326164749) do
+ActiveRecord::Schema.define(version: 20150330083421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,15 @@ ActiveRecord::Schema.define(version: 20150326164749) do
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
+
+  create_table "document_histories", force: true do |t|
+    t.string   "uploadedBy"
+    t.integer  "versionNumber"
+    t.string   "checksum"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "document_template_id"
+  end
 
   create_table "document_templates", force: true do |t|
     t.string   "name"
@@ -58,6 +67,23 @@ ActiveRecord::Schema.define(version: 20150326164749) do
   add_index "documents", ["document_template_id"], name: "index_documents_on_document_template_id", using: :btree
   add_index "documents", ["project_id"], name: "index_documents_on_project_id", using: :btree
   add_index "documents", ["user_id"], name: "index_documents_on_user_id", using: :btree
+
+  create_table "pmbok_processes", force: true do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pmbok_workflows", force: true do |t|
+    t.integer  "pmbok_process_id"
+    t.integer  "document_template_id"
+    t.string   "doctype",              limit: 1
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pmbok_workflows", ["document_template_id"], name: "index_pmbok_workflows_on_document_template_id", using: :btree
+  add_index "pmbok_workflows", ["pmbok_process_id"], name: "index_pmbok_workflows_on_pmbok_process_id", using: :btree
 
   create_table "projects", force: true do |t|
     t.string   "name"
@@ -90,8 +116,8 @@ ActiveRecord::Schema.define(version: 20150326164749) do
     t.datetime "updated_at"
     t.integer  "approver_id"
     t.integer  "assignee_id"
-    t.integer  "document_template_id"
     t.string   "remarks"
+    t.integer  "document_template_id"
   end
 
   add_index "tasks", ["approver_id"], name: "index_tasks_on_approver_id", using: :btree
