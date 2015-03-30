@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :member, :assigntaskindex, :createtask, :tasks, :edittask]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :member, :assigntaskindex, :createtask, :tasks, :edittask, :status]
   before_filter :authenticate_user!, :except => [:index]
 
   # GET /projects
@@ -136,6 +136,10 @@ class ProjectsController < ApplicationController
   def remove_member
     project_member = ProjectUser.where(project_id: params[:id], user_id: params[:userid]).delete_all
     redirect_to :member
+  end
+
+  def status
+    @processes = PmbokProcess.all.order 'id ASC'
   end
 
   private

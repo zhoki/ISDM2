@@ -1,0 +1,72 @@
+<ul class="nav nav-tabs">
+  <li role="presentation"><%= link_to "Basic Info", project_path %></li>
+  <li role="presentation" class="active"><%= link_to "Status", action: 'status', id: @project.id %></li>
+  <li role="presentation"><%= link_to "Members", member_path(:project_id => @project.id) %></li>
+  <li role="presentation"><%= link_to "Documents", "/documents" %></li>
+  <% if current_user.project_manager? %>
+    <li role="presentation"><%= link_to "Assign Task", assigntaskindex_path(project_id: @project.id) %></li>
+    <li role="presentation"><%= link_to "Tasks", tasklist_path(project_id: @project.id) %></li>
+  <% end %>
+</ul>
+
+<style type="text/css">
+  li.list-group-item a{
+    color: #111111;
+  }
+  li.list-group-item a:hover{
+    color: #BBBBBB;
+  }
+
+  li.list-group-item:hover{
+    background-color: #F9F9FA;
+  }
+</style>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('a.process-btn').click(function(event) {
+      $this = $(this);
+
+      $('a.process-btn').not(this).each(function(index, el) {
+        var $link = $(el);
+        $link.parent().find('div.content').fadeOut(200, function(){
+          $this.parent().find('div.content').delay(200).fadeIn(200);
+        });
+      });
+    });
+  });
+</script>
+
+<div class="panel-body">
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="list-group">
+      <% @processes.each_with_index do |process, index| %>
+        <li class="list-group-item" style="min-height: 50px; padding-left: 10px;">
+          <a href="#" class="process-btn" id="content_<%= process.id %>">
+            <div style="width: 50%; float: left;">
+              <%= "#{index+1}. #{process.name}" %>
+            </div>
+          </a>
+
+          <div class="progress" style="width: 50%; float: right;">
+            <div class="progress-bar progress-bar-success" style="width: 35%">
+            </div>
+            <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 20%">
+            </div>
+            <div class="progress-bar progress-bar-danger" style="width: 10%">
+            </div>
+          </div>
+
+          <div class="content" id="content_<%= index %>" style="display: none;">
+            <br/><br/>
+            CONTENT FOR PROCESS <%= process.name %>
+          </div>
+        </li>
+      <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+

@@ -9,5 +9,5 @@ class PmbokWorkflow < ActiveRecord::Base
 
   validates :pmbok_process, presence: true
   validates :document_template, presence: true
-  validates :doctype, length: { maximum: 1 }, inclusion: { in: %w(I O) }
+  validates :doctype, length: { maximum: 1 }, inclusion: { in: (%w(I O)) << nil }
 end

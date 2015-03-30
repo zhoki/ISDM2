@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150330083421) do
+ActiveRecord::Schema.define(version: 20150330145330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20150330083421) do
   end
 
   add_index "pmbok_workflows", ["document_template_id"], name: "index_pmbok_workflows_on_document_template_id", using: :btree
+  add_index "pmbok_workflows", ["pmbok_process_id", "document_template_id"], name: "unique_workflow", unique: true, using: :btree
   add_index "pmbok_workflows", ["pmbok_process_id"], name: "index_pmbok_workflows_on_pmbok_process_id", using: :btree
 
   create_table "projects", force: true do |t|

@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'workflows/set'
+
+  get 'workflows/update'
+
   get 'search/index'
 
   get 'search/result'
@@ -40,12 +44,14 @@ end
   post 'search/result'
   get 'search/result'
 
+  get 'projects/status/:id' => 'projects#status'
+
   get 'documents/new/:proj_id/:doctmpl_id' => 'documents#new', as: :newdocument
   get 'documents/edit/:proj_id/:id/:doctmpl_id' => 'documents#edit', as: :editdocument
   post 'documents/edit/:proj_id/:id/:doctmpl_id' => 'documents#edit'
 
- 
-
+  get 'templates/workflows/set/:doctmpl_id' => 'workflows#set'
+  post 'templates/workflows/update/:doctmpl_id' => 'workflows#update', as: :workflowupdate
 
 
   # The priority is based upon order of creation: first created -> highest priority.

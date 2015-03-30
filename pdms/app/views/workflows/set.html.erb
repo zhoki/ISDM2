@@ -1,0 +1,66 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('button#btnClear').click(function(event) {
+      $('table#tblWorkflow input[type=radio]:checked').attr('checked', false);
+    });
+
+    $('input[type=submit]').click(function(event) {
+      var rowCount = $('table#tblWorkflow tbody tr').size();
+      if($('table#tblWorkflow input[type=radio]:checked').size() < rowCount)
+      {
+        var confirmation = confirm("There are some processes left unspecified. Are you sure?");
+
+        if(!confirmation)
+          return false;
+      }
+    });
+  });
+</script>
+
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+  <%= form_tag :workflowupdate, doctmpl_id: @documentTemplate.id do %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Set workflow for: <%= @documentTemplate.name %> 
+        <%= submit_tag "Set workflow", class: "btn btn-primary", style: 'float: right;', id: 'btnSubmit' %>
+        <button type="button" id="btnClear" class="btn btn-warning" style="float: right; margin-right: 10px;">Clear</button>
+        </h3>
+      </div>
+      
+        <table class="table table-striped" id="tblWorkflow">
+          <thead>
+            <tr>
+              <th width="">Process name</th>
+              <th style="width: 100px; text-align: center;">Input</th>
+              <th style="width: 100px; text-align: center;">Output</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @processes.each do |process| %>
+              <% value = @workflowSettings[process.id] %>
+              <tr>
+                <td><%= process.name %></td>
+                <td style="text-align: center;">
+                  <div class="checkbox">
+                    <% iValue = if not value.nil? and value.upcase == 'I' then true else false end %>
+                    <%= radio_button_tag "proc_#{process.id}", 'I', iValue %>
+                  </div>
+                </td>
+                <td style="text-align: center;">
+                  <div class="checkbox">
+                     <% oValue = if not value.nil? and value.upcase == 'O' then true else false end %>
+                    <%= radio_button_tag "proc_#{process.id}", 'O', oValue %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+  <% end %>
+  <div class="col-md-3"></div>
+</div>
