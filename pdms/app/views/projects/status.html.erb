@@ -26,11 +26,17 @@
   $(document).ready(function() {
     $('a.process-btn').click(function(event) {
       $this = $(this);
+      $visibleContentOfCurrentRow = $this.closest('li').find('div.content:visible');
+      if($visibleContentOfCurrentRow.size() > 0)
+      {
+        $visibleContentOfCurrentRow.fadeOut('200');
+        return;
+      }
 
       $('a.process-btn').not(this).each(function(index, el) {
         var $link = $(el);
-        $link.parent().find('div.content').fadeOut(200, function(){
-          $this.parent().find('div.content').delay(200).fadeIn(200);
+        $link.closest('li').find('div.content').fadeOut(200, function(){
+          $this.closest('li').find('div.content').delay(200).fadeIn(200);
         });
       });
     });
@@ -43,24 +49,53 @@
       <ul class="list-group">
       <% @processes.each_with_index do |process, index| %>
         <li class="list-group-item" style="min-height: 50px; padding-left: 10px;">
-          <a href="#" class="process-btn" id="content_<%= process.id %>">
-            <div style="width: 50%; float: left;">
-              <%= "#{index+1}. #{process.name}" %>
+          <div class="row">
+            <div class="col-md-6">
+              <a href="#" class="process-btn" id="content_<%= process.id %>">
+                <div style="width: 50%; float: left;">
+                  <%= "#{index+1}. #{process.name}" %>
+                </div>
+              </a>
             </div>
-          </a>
 
-          <div class="progress" style="width: 50%; float: right;">
-            <div class="progress-bar progress-bar-success" style="width: 35%">
-            </div>
-            <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 20%">
-            </div>
-            <div class="progress-bar progress-bar-danger" style="width: 10%">
+            <div class="col-md-6">
+              <div class="progress">
+                <div class="progress-bar progress-bar-success" style="width: 35%">
+                </div>
+                <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 20%">
+                </div>
+                <div class="progress-bar progress-bar-danger" style="width: 10%">
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="content" id="content_<%= index %>" style="display: none;">
-            <br/><br/>
-            CONTENT FOR PROCESS <%= process.name %>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="content" id="content_<%= index %>" style="display: none;">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <table class="table table-striped table-condensed">
+                      <thead>
+                        <th>Input</th>
+                        <th>Output</th>
+                      </thead>
+                      <tbody>
+                      <% _workflowMap = process.pmbok_workflows.group_by { |w| w.doctype } %>
+                      <% _rows = (if _workflowMap['I'].nil? then [nil] else _workflowMap['I'] end).zip _workflowMap['O'] %>
+                      <% _rows.each do |row| %>
+                        <tr>
+                          <td><%= if row[0].nil? then '' else row[0].document_template.name end %></td>
+                          <td><%= if row[1].nil? then '' else row[1].document_template.name end %></td>
+                        </tr>
+                      <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6"></div>
           </div>
         </li>
       <% end %>

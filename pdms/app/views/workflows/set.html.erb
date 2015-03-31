@@ -41,7 +41,7 @@
             <% @processes.each do |process| %>
               <% value = @workflowSettings[process.id] %>
               <tr>
-                <td><%= process.name %></td>
+                <td style="vertical-align: middle;"><%= process.name %></td>
                 <td style="text-align: center;">
                   <div class="checkbox">
                     <% iValue = if not value.nil? and value.upcase == 'I' then true else false end %>
