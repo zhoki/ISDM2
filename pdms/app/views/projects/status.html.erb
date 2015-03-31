@@ -83,7 +83,10 @@
                       </thead>
                       <tbody>
                       <% _workflowMap = process.pmbok_workflows.group_by { |w| w.doctype } %>
-                      <% _rows = (if _workflowMap['I'].nil? then [nil] else _workflowMap['I'] end).zip _workflowMap['O'] %>
+                      <% _inputWorkflows = if not _workflowMap['I'].nil? then _workflowMap['I'] else [nil] end %>
+                      <% _outputWorkflows = _workflowMap['O'] %>
+                      <% _inputWorkflows.fill nil, _inputWorkflows.count..._outputWorkflows.count %>
+                      <% _rows = _inputWorkflows.zip _outputWorkflows %>
                       <% _rows.each do |row| %>
                         <tr>
                           <td><%= if row[0].nil? then '' else row[0].document_template.name end %></td>
