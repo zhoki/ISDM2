@@ -49,26 +49,27 @@
       <ul class="list-group">
       <% @processes.each_with_index do |process, index| %>
         <li class="list-group-item" style="min-height: 50px; padding-left: 10px;">
-          <div class="row">
-            <div class="col-md-6">
-              <a href="#" class="process-btn" id="content_<%= process.id %>">
-                <div style="width: 50%; float: left;">
-                  <%= "#{index+1}. #{process.name}" %>
-                </div>
-              </a>
-            </div>
+          <a href="#" class="process-btn" id="content_<%= process.id %>">
+            <div class="row">
+              <div class="col-md-6">
+                
+                  <div style="width: 50%; float: left;">
+                    <%= "#{index+1}. #{process.name}" %>
+                  </div>
+              </div>
 
-            <div class="col-md-6">
-              <div class="progress">
-                <div class="progress-bar progress-bar-success" style="width: 35%">
-                </div>
-                <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 20%">
-                </div>
-                <div class="progress-bar progress-bar-danger" style="width: 10%">
+              <div class="col-md-6">
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" style="width: 35%">
+                  </div>
+                  <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 20%">
+                  </div>
+                  <div class="progress-bar progress-bar-danger" style="width: 10%">
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </a>
 
           <div class="row">
             <div class="col-md-6">
