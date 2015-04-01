@@ -4,16 +4,16 @@
       $('table#tblWorkflow input[type=radio]:checked').attr('checked', false);
     });
 
-    $('input[type=submit]').click(function(event) {
-      var rowCount = $('table#tblWorkflow tbody tr').size();
-      if($('table#tblWorkflow input[type=radio]:checked').size() < rowCount)
-      {
-        var confirmation = confirm("There are some processes left unspecified. Are you sure?");
+    // $('input[type=submit]').click(function(event) {
+    //   var rowCount = $('table#tblWorkflow tbody tr').size();
+    //   if($('table#tblWorkflow input[type=radio]:checked').size() < rowCount)
+    //   {
+    //     var confirmation = confirm("There are some processes left unspecified. Are you sure?");
 
-        if(!confirmation)
-          return false;
-      }
-    });
+    //     if(!confirmation)
+    //       return false;
+    //   }
+    // });
   });
 </script>
 

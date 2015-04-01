@@ -1,0 +1,94 @@
+rake = "ruby make"
+runs scripts known as "tasks"
+อ่าน Rakefile ใน root ของ project folder
+
+rake -T เรียกดู task list
+
+rake db:schema:dump 
+rake db:schema:dump RAILS_ENV=production (ไม่กำหนดจะเป็น development)
+สั่งให้ export schema จาก DB
+(ใช้เพื่อ test database configuration ก็ได้ ถ้าไม่มี error message คือสำเร็จ)
+พอทำงานเสร็จจะสร้างไฟล์ db/schema.rb 
+
+Migration? a set of database instructions
+เป็นการ migrate DB จาก state หนึ่งไปอีก state เช่นการเปลี่ยนแปลงใน DB เพิ่มลง table/column ฯลฯ
+สามารถปรับ state ไปอันใหม่ หรือย้ายกลับไป state เก่าก็ได้ เช่น สมมติมีการสร้าง table ใหม่ พอย้ายกลับ state เก่าก็จะลบ table ให้
+ประโยชน์:
+* ช่วยให้ DB schema สอดคล้องกับ code
+* สามารถเรียกใช้ซ้ำ ๆ ได้ เช่น ย้ายไปใช้คอมอีกเครื่องแค่ migrate DB ไป ก็ใช้ได้เลย
+* ช่วยแชร์การเปลี่ยนแปลงใน DB schema
+* ช่วยเรื่อง versioning
+* ไม่ต้องเขียน SQL ใช้ Ruby ก็ทำงานได้
+
+rails generate migration <migration name spelled with CamelCase>
+จะสร้างไฟล์ใหม่ใน /db/migrate/ โดยชื่อไฟล์จะมีการใส่ timestamp ไว้ข้างหน้า
+เพื่อให้ไฟล์เรียงไปตามลำดับที่เกิดการ migrate เพราะเวลาทำงานจริงจะทำหลายคน
+ต่างคนก็ต่างสามารถสร้าง migration ของตัวเองแล้วกองรวมกันไว้ได้
+
+rails จะสร้าง migration ให้หลังจากสั่ง generate model เพิ่มลงไปใน project
+
+หลังจากที่ไป define table ใน migration แล้วรัน rake db:migrate 
+rails จะเติม code ลงใน db/schema.rb ให้ด้วย
+
+method change ใน ruby migration code มีไว้สำหรับเรียก method ที่ reversable 
+เช่น rename_table("users", "admin_users") ถ้า up จะเปลี่ยนจาก users -> admin_users
+ส่วน down ก็จะกลับลำดับกัน
+แต่ไม่ใช่ว่าทุก method จะ reversable!
+** ถ้าเขียน method up/down แยกกัน ตอนเขียน down ก็ให้ copy up มาแล้วกลับลำดับ method call และแก้ parameter ให้ DB คืนสภาพเดิม
+
+rake db:migrate VERSION=0 (ตัวใหญ่หมดจะรู้ว่าเป็น environment variable) 
+สั่งให้ run method 'down' ในแต่ละ migration โดยย้อนลำดับการสร้าง migration
+และจัดการลบ tuple ใน table 'schema_migration' ที่มีเลข version เกินกว่าที่เราสั่ง migrate down ออกไป
+เอาไว้แสดง version ล่าสุดของ DB
+
+rake db:migrate:status
+ดู status ว่า migration มีอันไหน up/down บ้าง
+
+rake db:migrate:up VERSION=xxxx
+รัน method up ของ VERSION นั้น ๆ
+
+rake db:migrate:down VERSION=xxxx
+รัน method down ของ VERSION นั้น ๆ
+
+rake db:migrate:redo VERSION=xxxx
+รัน method down จากนั้น up
+*ถ้าไม่ใส่ VERSION จะทำกับ migration ล่าสุด
+
+=====================================
+Table migration methods
+=====================================
+
+create_table(table, options) do {t}
+  ... columns ...
+end
+
+drop_table(table)
+
+rename_table(table, new_name)
+
+=====================================
+Column migration methods
+=====================================
+add_column(table, column, type, options)
+remove_column(table, column)
+rename_column(table, column, new_name)
+change_column(table, column, type, options)
+
+=====================================
+Index migration methods
+=====================================
+add_index(table, column, options)
+options มี
+:uninque => true/false
+:name => "custom_name"
+*** ต้อง add_index บน attribute ที่เป็น FK!!!
+
+remove_index(table, column)
+Index บนหลาย attributes ให้ส่ง array ของชื่อ attributes เข้าไปแทน (เดิมส่ง string)
+
+=====================================
+Execute migration methods
+=====================================
+execute("any SQL expression")
+** ActiveRecords จะแปลง Ruby เป็น SQL ที่รองรับกับ DBMS ปลายทางให้
+แต่ execute() ไม่ใช่

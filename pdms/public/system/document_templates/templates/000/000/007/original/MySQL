@@ -1,0 +1,9 @@
+the file located at /etc/init/mysql.override is for stopping MySQL from starting up automatically. Delete this file to restore the default behaviour.
+
+To start MySQL Service: sudo service mysql start
+
+
+MySQL:
+root:Pr0...
+
+MySQL sock: /var/run/mysqld/mysqld.sock

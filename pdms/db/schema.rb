@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150330145330) do
+ActiveRecord::Schema.define(version: 20150331132625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,22 +109,31 @@ ActiveRecord::Schema.define(version: 20150330145330) do
     t.datetime "updated_at"
   end
 
+  create_table "task_statuses", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "task_statuses", ["name"], name: "index_task_statuses_on_name", unique: true, using: :btree
+
   create_table "tasks", force: true do |t|
     t.date     "assignedOn"
     t.integer  "project_id"
-    t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "approver_id"
     t.integer  "assignee_id"
     t.string   "remarks"
     t.integer  "document_template_id"
+    t.integer  "task_status_id",       default: 1
   end
 
   add_index "tasks", ["approver_id"], name: "index_tasks_on_approver_id", using: :btree
   add_index "tasks", ["assignee_id"], name: "index_tasks_on_assignee_id", using: :btree
   add_index "tasks", ["document_template_id"], name: "index_tasks_on_document_template_id", using: :btree
   add_index "tasks", ["project_id"], name: "index_tasks_on_project_id", using: :btree
+  add_index "tasks", ["task_status_id"], name: "index_tasks_on_task_status_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

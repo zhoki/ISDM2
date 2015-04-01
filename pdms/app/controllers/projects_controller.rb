@@ -48,33 +48,43 @@ class ProjectsController < ApplicationController
 
   def createtask
     doctmpl_id = params[:doctmpl_id]
-    doctmpl = DocumentTemplate.find doctmpl_id
 
-    remark = params[:remark]
+    # check for an existing task for this project and this document template that still remains unapproved.
+    approvedStatus = TaskStatus.where "name LIKE '%Approved%'"
+    existingUnapprovedTasks = Task.where(project_id: @project.id, document_template_id: doctmpl_id).where.not(task_status: approvedStatus)
 
-    approver_id = params[:approver_id]
-    approver = User.find approver_id
+    if existingUnapprovedTasks.count > 0
+      flash[:alert] = "Error: There is already a task for this document template that are still unapproved."
+      redirect_to action: :assigntaskindex
+    else
+      doctmpl = DocumentTemplate.find doctmpl_id
 
-    assignee_id = params[:assignee_id]
-    assignee = User.find assignee_id
+      remark = params[:remark]
 
-    currentDate = Date.parse(Time.now.to_s)
+      approver_id = params[:approver_id]
+      approver = User.find approver_id
 
-    task = Task.new
-    task.project = @project
-    task.assignedOn = currentDate
-    task.approver = approver
-    task.assignee = assignee
-    task.document_template = doctmpl
-    task.remarks = remark
+      assignee_id = params[:assignee_id]
+      assignee = User.find assignee_id
 
-    task.save
+      currentDate = Date.parse(Time.now.to_s)
 
-    redirect_to action: :tasks
+      task = Task.new
+      task.project = @project
+      task.assignedOn = currentDate
+      task.approver = approver
+      task.assignee = assignee
+      task.document_template = doctmpl
+      task.remarks = remark
+
+      task.save
+
+      redirect_to action: :tasks
+    end
   end
 
   def tasks
-    @tasks = Task.where(project_id: @project.id).order('document_template_id ASC, id ASC')
+    @tasks = Task.where(project_id: @project.id).order('task_status_id ASC, document_template_id ASC, id ASC')
   end
 
   def edittask
@@ -140,6 +150,22 @@ class ProjectsController < ApplicationController
 
   def status
     @processes = PmbokProcess.all.order 'id ASC'
+
+    latestTaskForEachDocumentTemplate = \
+    %Q(SELECT MAX(t.id) id, MAX("assignedOn") assignedOn, MAX(project_id) project_id, created_at, 
+              MAX(updated_at) updated_at, MAX(approver_id) approver_id, MAX(assignee_id) assignee_id, 
+              MAX(remarks) remarks, document_template_id, MAX(task_status_id) task_status_id
+       FROM tasks t
+       WHERE project_id = ?
+       GROUP BY t.project_id, t.document_template_id, t.created_at
+       HAVING t.created_at = (SELECT MAX(created_at) 
+                              FROM tasks tt 
+                              WHERE tt.project_id = t.project_id AND 
+                                    tt.document_template_id = t.document_template_id))
+
+    @tasks = Task.find_by_sql [latestTaskForEachDocumentTemplate, @project.id]
+    @templates = DocumentTemplate.all
+    @tasksByDocumentTemplate = @tasks.group_by { |t| t.document_template_id }
   end
 
   private

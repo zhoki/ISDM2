@@ -20,6 +20,10 @@
   li.list-group-item:hover{
     background-color: #F9F9FA;
   }
+
+  .status-badge{
+    min-width: 20px;
+  }
 </style>
 
 <script type="text/javascript">
@@ -59,12 +63,36 @@
               </div>
 
               <div class="col-md-6">
+                <% _workflowsInProcess = process.pmbok_workflows.select { |w| not w.doctype.nil? } %>
+                <% _totalTemplateCount = _workflowsInProcess.count.to_f %>
+
+                <% _templateIdInProcess = _workflowsInProcess.collect { |w| w.document_template_id } %>
+                
+                <% _tasksRelevantToProcess = [] %>
+                <% _templateIdInProcess.each { |id| if not @tasksByDocumentTemplate[id].nil? then @tasksByDocumentTemplate[id].each { |t| _tasksRelevantToProcess << t } end } %>
+
+                <% _tasksByTaskStatus = _tasksRelevantToProcess.group_by { |t| t.task_status_id } %>
+
+                <% _approvedStatus = TaskStatus.where("name LIKE '%Approved%'").first %>
+                <% _approvedTasksPercentage = (if _tasksByTaskStatus[_approvedStatus.id].nil? then 0 else _tasksByTaskStatus[_approvedStatus.id].count end) * 100 / _totalTemplateCount %>
+
+                <% _submittedStatus = TaskStatus.where("name LIKE '%Submitted%'").first %>
+                <%  _submttedTasksPercentage = (if _tasksByTaskStatus[_submittedStatus.id].nil? then 0 else _tasksByTaskStatus[_submittedStatus.id].count end) * 100 / _totalTemplateCount %>
+
+                <% _inProgressStatus = TaskStatus.where("name LIKE '%In progress%'").first %>
+                <% _inProgressTasksPercentage = (if _tasksByTaskStatus[_inProgressStatus.id].nil? then 0 else _tasksByTaskStatus[_inProgressStatus.id].count end) * 100 / _totalTemplateCount %>
+
+                <% _reviseStatus = TaskStatus.where("name LIKE '%Revise%'").first %>
+                <% _reviseTasksPercentage = (if _tasksByTaskStatus[_reviseStatus.id].nil? then 0 else _tasksByTaskStatus[_reviseStatus.id].count end) * 100 / _totalTemplateCount %>
+
                 <div class="progress">
-                  <div class="progress-bar progress-bar-success" style="width: 35%">
+                  <div class="progress-bar progress-bar-success" style="width: <%= _approvedTasksPercentage.round %>%">
                   </div>
-                  <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 20%">
+                  <div class="progress-bar progress-bar-info" style="width: <%= _submttedTasksPercentage.round %>%">
                   </div>
-                  <div class="progress-bar progress-bar-danger" style="width: 10%">
+                  <div class="progress-bar progress-bar-warning" style="width: <%= _inProgressTasksPercentage.round %>%">
+                  </div>
+                  <div class="progress-bar progress-bar-danger" style="width: <%= _reviseTasksPercentage.round %>%">
                   </div>
                 </div>
               </div>
@@ -89,8 +117,24 @@
                       <% _rows = _inputWorkflows.zip _outputWorkflows %>
                       <% _rows.each do |row| %>
                         <tr>
-                          <td><%= if row[0].nil? then '' else row[0].document_template.name end %></td>
-                          <td><%= if row[1].nil? then '' else row[1].document_template.name end %></td>
+                          <td>
+                            <% if not row[0].nil? %>
+                              <% if not @tasksByDocumentTemplate[row[0].document_template.id].nil? %>
+                                <% _task = @tasksByDocumentTemplate[row[0].document_template.id].first %>
+                                <p class="<%= getClassNameByTaskStatus(_task.task_status) %> status-badge"><%= _task.task_status.name[0].upcase %></p> 
+                              <% end %>
+                              <%= row[0].document_template.name %>
+                            <% end %>
+                          </td>
+                          <td>
+                            <% if not row[1].nil? %>
+                              <% if not @tasksByDocumentTemplate[row[1].document_template.id].nil? %>
+                                <% _task = @tasksByDocumentTemplate[row[1].document_template.id].first %>
+                                <p class="<%= getClassNameByTaskStatus(_task.task_status) %> status-badge"><%= _task.task_status.name[0].upcase %></p> 
+                              <% end %>
+                              <%= row[1].document_template.name %>
+                            <% end %>
+                          </td>
                         </tr>
                       <% end %>
                       </tbody>

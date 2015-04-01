@@ -34,10 +34,10 @@
           <td><%= task.document_template.name %></td>
           <td><%= "#{task.approver.firstName} #{task.approver.lastName}" %></td>
           <td><%= "#{task.assignee.firstName} #{task.assignee.lastName}" %></td>
-          <td><%= task.status %></td>
+          <td><p class="<%= getClassNameByTaskStatus task.task_status %>"><%= task.task_status.name %></p></td>
           <td>
-            <%= link_to '(Edit Task) ', action: 'edittask', id: @project.id, taskid: task.id %>
-            (Feedback)
+            <%= link_to 'Edit Task ', action: 'edittask', id: @project.id, taskid: task.id %>
+            Feedback
           </td>
         </tr>
       <% end %>

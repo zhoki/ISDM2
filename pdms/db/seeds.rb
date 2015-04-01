@@ -19,3 +19,10 @@ proc1 = PmbokProcess.create name: 'Plan Human Resource Management'
 proc2 = PmbokProcess.create name: 'Acquire Project Team'
 proc3 = PmbokProcess.create name: 'Develop Project Team'
 proc4 = PmbokProcess.create name: 'Manage Project Team'
+
+# Create 3 initial task statuses
+status1 = TaskStatus.create name: 'In progress'
+status2 = TaskStatus.create name: 'Submitted for approval'
+status3 = TaskStatus.create name: 'Approved'
+status4 = TaskStatus.create name: 'Revise'
+status5 = TaskStatus.create name: 'Closed'

@@ -26,7 +26,7 @@
             <%= task.approver.lastName %></td>
         <td><%= task.assignee.firstName %>
             <%= task.assignee.lastName %></td>
-        <td><%= task.status %></td>
+        <td><%= task.task_status.name %></td>
         <td><%= link_to 'Send for approval', "#" %></td>
         <td><%= link_to 'Download Template', DocumentTemplate.find(task.document_template).template.url(:original, false) %></td>
         <td><%= link_to 'Upload file', controller: :documents, action: :new, proj_id: task.project.id, doctmpl_id: task.document_template.id %></td>
