@@ -30,6 +30,7 @@
   $(document).ready(function() {
     $('a.process-btn').click(function(event) {
       $this = $(this);
+      $this.blur();
       $visibleContentOfCurrentRow = $this.closest('li').find('div.content:visible');
       if($visibleContentOfCurrentRow.size() > 0)
       {
