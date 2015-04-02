@@ -28,6 +28,8 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
+    $('[data-toggle="tooltip"]').tooltip();
+
     $('a.process-btn').click(function(event) {
       $this = $(this);
       $this.blur();
@@ -87,13 +89,13 @@
                 <% _reviseTasksPercentage = (if _tasksByTaskStatus[_reviseStatus.id].nil? then 0 else _tasksByTaskStatus[_reviseStatus.id].count end) * 100 / _totalTemplateCount %>
 
                 <div class="progress">
-                  <div class="progress-bar progress-bar-success" style="width: <%= _approvedTasksPercentage.round %>%">
+                  <div class="progress-bar progress-bar-success" style="width: <%= _approvedTasksPercentage.round %>%" data-toggle="tooltip" data-placement="top" title="Approved">
                   </div>
-                  <div class="progress-bar progress-bar-info" style="width: <%= _submttedTasksPercentage.round %>%">
+                  <div class="progress-bar progress-bar-info" style="width: <%= _submttedTasksPercentage.round %>%" data-toggle="tooltip" data-placement="top" title="Submitted for approval">
                   </div>
-                  <div class="progress-bar progress-bar-warning" style="width: <%= _inProgressTasksPercentage.round %>%">
+                  <div class="progress-bar progress-bar-warning" style="width: <%= _inProgressTasksPercentage.round %>%" data-toggle="tooltip" data-placement="top" title="In progress">
                   </div>
-                  <div class="progress-bar progress-bar-danger" style="width: <%= _reviseTasksPercentage.round %>%">
+                  <div class="progress-bar progress-bar-danger" style="width: <%= _reviseTasksPercentage.round %>%" data-toggle="tooltip" data-placement="top" title="Revise">
                   </div>
                 </div>
               </div>
