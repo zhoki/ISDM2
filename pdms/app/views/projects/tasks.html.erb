@@ -36,8 +36,12 @@
           <td><%= "#{task.assignee.firstName} #{task.assignee.lastName}" %></td>
           <td><p class="<%= getClassNameByTaskStatus task.task_status %>"><%= task.task_status.name %></p></td>
           <td>
-            <%= link_to 'Edit Task ', action: 'edittask', id: @project.id, taskid: task.id %>
-            Feedback
+            <%= link_to action: 'edittask', id: @project.id, taskid: task.id do %>
+            <p class="btn btn-default btn-sm">Edit</p>
+            <% end %>
+            <% if task.task_status.name.downcase.ends_with? 'approval' %>
+              <a href="#" class="btn btn-default btn-warning btn-sm">Respond</a>
+            <% end %>
           </td>
         </tr>
       <% end %>

@@ -36,14 +36,14 @@
       $visibleContentOfCurrentRow = $this.closest('li').find('div.content:visible');
       if($visibleContentOfCurrentRow.size() > 0)
       {
-        $visibleContentOfCurrentRow.fadeOut('200');
+        $visibleContentOfCurrentRow.slideUp(200);
         return;
       }
 
       $('a.process-btn').not(this).each(function(index, el) {
         var $link = $(el);
-        $link.closest('li').find('div.content').fadeOut(200, function(){
-          $this.closest('li').find('div.content').delay(200).fadeIn(200);
+        $link.closest('li').find('div.content').slideUp(200, function(){
+          $this.closest('li').find('div.content').delay(200).slideDown('200');
         });
       });
     });
