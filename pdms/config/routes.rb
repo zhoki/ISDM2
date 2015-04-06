@@ -3,12 +3,8 @@ Rails.application.routes.draw do
   get 'workflows/set'
 
   get 'workflows/update'
-
-  get 'search/index'
-
-  get 'search/result'
-
-  get 'search/search'
+  
+  get 'projects/search'
 
   ActiveAdmin.routes(self) 
 
@@ -41,8 +37,6 @@ end
   post 'projects/:id/updatetask' => 'projects#updatetask', as: :updatetask
   post 'projects/:id/createtask' => 'projects#createtask', as: :createtask
   get 'projects/:id/member/remove_member' => 'projects#remove_member', as: :remove_member
-  post 'search/result'
-  get 'search/result'
 
   get 'projects/status/:id' => 'projects#status'
 

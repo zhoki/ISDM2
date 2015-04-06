@@ -168,6 +168,12 @@ class ProjectsController < ApplicationController
     @tasksByDocumentTemplate = @tasks.group_by { |t| t.document_template_id }
   end
 
+  def search
+    @search_word = params[:search]
+    @results = Project.where("name ILIKE ? OR description ILIKE?", "%#{@search_word}%",
+                                "%#{@search_word}%")
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
