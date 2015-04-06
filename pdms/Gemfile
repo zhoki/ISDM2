@@ -39,6 +39,13 @@ gem 'diffy'
 
 gem 'pry-rails', :group => :development
 
+group :development do
+	gem 'better_errors'
+	#for chrome plugin 'rails plugin'
+	gem 'meta_request' #chrome extension: http://goo.gl/hM1ekO 
+	gem 'binding_of_caller' #provides alive shell on error page
+end
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
