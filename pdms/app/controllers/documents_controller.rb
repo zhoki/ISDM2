@@ -35,7 +35,7 @@ class DocumentsController < ApplicationController
 
     respond_to do |format|
       if @document.save
-        format.html { redirect_to @document, notice: 'Document was successfully created.' }
+        format.html { redirect_to documents_url, notice: 'Document was successfully created.' }
         format.json { render :show, status: :created, location: @document }
       else
         format.html { render :new }
@@ -49,8 +49,8 @@ class DocumentsController < ApplicationController
   def update
     respond_to do |format|
       if @document.update(document_params)
-        format.html { redirect_to @document, notice: 'Document was successfully updated.' }
-        format.json { render :show, status: :ok, location: @document }
+        format.html { redirect_to documents_url, notice: 'Document was successfully updated.' }
+        format.json { render :index, status: :ok, location: @document }
       else
         format.html { render :edit }
         format.json { render json: @document.errors, status: :unprocessable_entity }
@@ -67,6 +67,11 @@ class DocumentsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  #Download Template
+  #def download
+  #send_file(@document.docFile)
+  #end
 
   private
     # Use callbacks to share common setup or constraints between actions.

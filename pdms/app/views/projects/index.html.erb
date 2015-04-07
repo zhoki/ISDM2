@@ -24,12 +24,11 @@
   <tbody>
     <% @projects.each do |project| %>
       <tr>
-        <td><%= project.name %></td>
+        <td><%= link_to project.name, project %></td>
         <td><%= project.description %></td>
         <td><%= project.startDate %></td>
         <td><%= project.dueDate %></td>
         <td><%= project.pm %></td>
-        <td><%= link_to 'Show', project %></td>
         <% if current_user && current_user.role_id == 2 %>
         <td><%= link_to 'Edit', edit_project_path(project) %></td>
         <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -47,3 +46,5 @@
 <% end %>
      </div>
     </div>
+
+

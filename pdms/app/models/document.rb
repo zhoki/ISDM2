@@ -5,7 +5,7 @@ class Document < ActiveRecord::Base
 
   has_attached_file :docFile
 
-  has_paper_trail
+  has_paper_trail on: [:update]
 
   def user_name
     user ? user.firstName : ''

@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   end
 end
 
+  get 'documents/index'
+
   resources :tasks
   
   resources :roles

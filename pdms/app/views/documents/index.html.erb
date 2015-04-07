@@ -19,9 +19,13 @@
         <td><%= document.docFile_file_name %></td>
         <td><%= document.user.firstName%>
             <%= document.user.lastName%></td>
-        <td><%= link_to 'Show', document %></td>
+        <% if current_user && current_user.role_id == 3 && current_user.firstName == document.user.firstName %>
         <td><a href="<%= "documents/edit/#{document.project.id}/#{document.id}/#{document.document_template.id}" %>">Edit</a> </td>
         <td><%= link_to 'Destroy', document, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+        <% if current_user && current_user.role_id == 2 %>
+        <td><%= link_to 'Download', Document.find(document.id).docFile.url(:original, false) %>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
