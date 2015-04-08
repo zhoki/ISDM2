@@ -14,7 +14,7 @@
   </thead>
 
   <tbody>
-    <% tasks = Task.where project_id: project.id, assignee_id: @user.id %>
+    <% tasks = Task.where(project_id: project.id, assignee_id: @user.id).where.not(task_status_id: 3) %>
     <% tasks.each do |task| %>
       <tr>
         <td><%= task.assignedOn %></td>
