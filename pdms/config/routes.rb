@@ -42,7 +42,7 @@ end
 
   get 'projects/status/:id' => 'projects#status'
 
-  get 'projects/:id/documents' => 'documents#index'
+  get 'projects/:id/documents' => 'documents#index', as: :indexdocument
   get 'documents/new/:proj_id/:doctmpl_id' => 'documents#new', as: :newdocument
   post 'documents/create/:proj_id/:doctmpl_id' => 'documents#create'
   get 'documents/delete/:proj_id/:id' => 'documents#destroy'

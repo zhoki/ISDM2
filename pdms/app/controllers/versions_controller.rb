@@ -11,7 +11,7 @@ class VersionsController < ApplicationController
     document = @version.reify
     document.save
     #redirect_to edit_document_path(document)
-    redirect_to documents_path
+    redirect_to indexdocument_path
   end
 
   private
