@@ -39,6 +39,7 @@ end
   post 'projects/:id/updatetask' => 'projects#updatetask', as: :updatetask
   post 'projects/:id/createtask' => 'projects#createtask', as: :createtask
   get 'projects/:id/member/remove_member' => 'projects#remove_member', as: :remove_member
+  post 'projects/:id/respondtask/' => 'projects#respondTask'
 
   get 'projects/status/:id' => 'projects#status'
 
@@ -48,7 +49,6 @@ end
 
   get 'templates/workflows/set/:doctmpl_id' => 'workflows#set'
   post 'templates/workflows/update/:doctmpl_id' => 'workflows#update', as: :workflowupdate
-
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

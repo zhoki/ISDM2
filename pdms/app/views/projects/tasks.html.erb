@@ -1,3 +1,50 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $('.modal#modalRespondTask').appendTo($("body")).find('form').addClass('form form-horizontal');
+
+    $('a.btnRespondTask').click(function(){
+      var $this = $(this);
+
+      $('.modal#modalRespondTask').modal();
+      if($('select#respondedStatusID').val() == '4')      
+      {
+        $('div.form-group.remarksGroup').show();
+      }
+      else
+      {
+        $('div.form-group.remarksGroup').hide();
+      }
+
+      var taskId = $this.closest('tr').find('td.colTaskId').text();
+      $('div.modal#modalRespondTask form input[type=hidden][name=task_id]').val(taskId);
+    });
+
+    $('select#respondedStatusID').change(function(){
+      var $this = $(this);
+      if($this.val() == '4')
+      {
+        $('div.form-group.remarksGroup').slideDown('200');
+      }
+      else
+      {
+        $('div.form-group.remarksGroup').slideUp('200');
+      }
+    });
+
+    $('input#btnSubmitResponse').click(function(){
+      if($('select#respondedStatusID').val() == '4')
+      {
+        if($('textarea#remarks').val().trim().length == 0)
+        {
+          alert('Please enter remarks!');
+          return false;
+        }
+      }
+    });
+  });
+</script>
+
 <p id="notice"><%= notice %></p>
 
 <ul class="nav nav-tabs">
@@ -28,24 +75,63 @@
       </thead>
       <tbody>
       <% @tasks.each do |task| %>
-        <tr>
-          <td><%= task.id %></td>
+        <tr id="rowTaskId_<%= task.id %>">
+          <td class="colTaskId"><%= task.id %></td>
           <td><%= task.assignedOn %></td>
           <td><%= task.document_template.name %></td>
           <td><%= "#{task.approver.firstName} #{task.approver.lastName}" %></td>
           <td><%= "#{task.assignee.firstName} #{task.assignee.lastName}" %></td>
           <td><p class="<%= getClassNameByTaskStatus task.task_status %>"><%= task.task_status.name %></p></td>
           <td>
-            <%= link_to action: 'edittask', id: @project.id, taskid: task.id do %>
-            <p class="btn btn-default btn-sm">Edit</p>
+            <% if task.task_status_id != 3 %>
+              <%= link_to action: 'edittask', id: @project.id, taskid: task.id do %>
+              <p class="btn btn-default btn-sm">Edit</p>
+              <% end %>
             <% end %>
             <% if task.task_status.name.downcase.ends_with? 'approval' %>
-              <a href="#" class="btn btn-default btn-warning btn-sm">Respond</a>
+              <a href="#" class="btn btn-warning btn-sm btnRespondTask">Respond</a>
             <% end %>
           </td>
         </tr>
       <% end %>
       </tbody>
     </table>
+  </div>
+</div>
+
+<div class="modal fade" id="modalRespondTask" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="z-index: 9999;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Respond to submitted task</h4>
+      </div>
+      <%= form_tag action: "respondTask" do %>
+      <div class="modal-body">
+        <%= hidden_field_tag :task_id %>
+        <div class="form-group">
+          <div class="col-sm-2" style="height: 100%;">
+            <label for="respondedStatusID" class="control-label">Result</label>
+          </div>
+          <div class="col-sm-10">
+            <% taskstatusitems = @taskStatus.map { |status| [status.name, status.id] } %>
+            <%= select_tag :respondedStatusID, options_for_select(taskstatusitems), class: 'form-control' %>
+          </div>
+        </div>
+        <div class="form-group remarksGroup">
+          <div class="col-sm-2">
+            <label for="remarks" class="control-label">Remarks</label>
+          </div>
+          <div class="col-sm-10">
+            <%= text_area_tag :remarks, nil, class: 'form-control', rows: 5 %>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= submit_tag "Respond", class: "btn btn-primary", id: 'btnSubmitResponse' %>
+      </div>
+      <% end %>
+    </div>
   </div>
 </div>

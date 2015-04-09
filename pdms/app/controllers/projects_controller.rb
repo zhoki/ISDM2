@@ -84,7 +84,8 @@ class ProjectsController < ApplicationController
   end
 
   def tasks
-    @tasks = Task.where(project_id: @project.id).order('task_status_id ASC, document_template_id ASC, id ASC')
+    @tasks = Task.where(project_id: @project.id).order('id DESC, task_status_id ASC')
+    @taskStatus = TaskStatus.where id: [3, 4]
   end
 
   def edittask
@@ -99,6 +100,30 @@ class ProjectsController < ApplicationController
     task.assignee = newAssignee
     task.save
     redirect_to action: 'tasks'
+  end
+
+  def respondTask
+    taskId = params[:task_id]
+    newTaskStatus = TaskStatus.find params[:respondedStatusID]
+    remarks = params[:remarks]
+
+    task = Task.find taskId
+
+    if newTaskStatus.id == 3
+      task.remarks = ''
+      task.task_status = newTaskStatus
+      task.save
+    elsif newTaskStatus.id == 4
+      if remarks.strip.length > 0
+        task.remarks = remarks
+        task.task_status = newTaskStatus
+        task.save
+      else
+        flash[:alert] = 'Error: remarks cannot be empty if you want to have this task revised.'
+      end
+    end
+
+    redirect_to action: :tasks
   end
 
   # PATCH/PUT /projects/1

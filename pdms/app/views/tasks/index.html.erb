@@ -1,3 +1,16 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.modal#modalShowRemarks').appendTo($("body"));
+
+    $('button.btnShowRemarks').click(function(){
+      var $this = $(this);
+      $('.modal#modalShowRemarks div.remarks').html($this.closest('td').find('div.hiddenRemarks').html());
+      $('.modal#modalShowRemarks').modal();
+    });
+
+  });
+</script>
+
 <h1>Tasks assigned to <%= "#{@user.firstName} #{@user.lastName}" %></h1>
 <% @projects.each do |project| %>
   <table class="table">
@@ -24,7 +37,19 @@
             <%= task.approver.lastName %></td>
         <td><%= task.assignee.firstName %>
             <%= task.assignee.lastName %></td>
-        <td><p class="<%= getClassNameByTaskStatus task.task_status %>"><%= task.task_status.name %></p></td>
+        <td>
+          <% if task.task_status.id == 4 %>
+            <button type="button" class="btn btn-xs btn-danger btnShowRemarks">
+              <span aria-hidden="true" class="glyphicon glyphicon-info-sign"></span>
+              <p class="<%= getClassNameByTaskStatus task.task_status %>"><%= task.task_status.name %></p>
+            </button>
+            <div class="hiddenRemarks" style="display: none;">
+              <%= simple_format task.remarks %>
+            </div>
+          <% else %>
+            <p class="<%= getClassNameByTaskStatus task.task_status %>"><%= task.task_status.name %></p>
+          <% end %>
+        </td>
         <td><%= link_to 'Send for approval', "#" %></td>
         <td><%= link_to 'Download Template', DocumentTemplate.find(task.document_template).template.url(:original, false) %></td>
         <td><%= link_to 'Upload file', controller: :documents, action: :new, proj_id: task.project.id, doctmpl_id: task.document_template.id %></td>
@@ -35,7 +60,19 @@
 
 <% end %>
 
-
-<br>
-
-<%= link_to 'New Task', new_task_path, :class => "btn btn-default" %>
+<div class="modal fade" id="modalShowRemarks" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="z-index: 9999;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Remarks</h4>
+      </div>
+      <div class="modal-body">
+        <div class="remarks"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
