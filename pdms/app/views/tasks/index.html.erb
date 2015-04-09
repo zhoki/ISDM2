@@ -50,9 +50,22 @@
             <p class="<%= getClassNameByTaskStatus task.task_status %>"><%= task.task_status.name %></p>
           <% end %>
         </td>
-        <td><%= link_to 'Send for approval', "#" %></td>
+        <td>
+          <% if task.task_status_id != 2 %>
+            <%= link_to 'Send for approval', action: :submitForApproval, proj_id: project.id, id: task.id %>
+          <% end %>
+        </td>
         <td><%= link_to 'Download Template', DocumentTemplate.find(task.document_template).template.url(:original, false) %></td>
-        <td><%= link_to 'Upload file', controller: :documents, action: :new, proj_id: task.project.id, doctmpl_id: task.document_template.id %></td>
+        <td>
+        <% if task.task_status_id != 2 %>
+          <% _document = Document.where(project_id: project.id, document_template_id: task.document_template_id) %>
+          <% if _document.count == 0 %>
+            <%= link_to 'Upload file', controller: :documents, action: :new, proj_id: task.project.id, doctmpl_id: task.document_template.id %>
+          <% else %>
+            <%= link_to 'Upload file', controller: :documents, action: :edit, proj_id: task.project.id, id: _document.first.id, doctmpl_id: task.document_template.id %>
+          <% end %>
+        <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

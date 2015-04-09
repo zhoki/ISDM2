@@ -4,6 +4,7 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
+    @project = Project.find params[:id]
     @documents = Document.all
   end
 
@@ -17,12 +18,16 @@ class DocumentsController < ApplicationController
     @document = Document.new
     @project = Project.find params[:proj_id]
     @doctmpl = DocumentTemplate.find params[:doctmpl_id]
+
+    @formOptions = {}
   end
 
   # GET /documents/1/edit
   def edit
     @project = Project.find params[:proj_id]
     @doctmpl = DocumentTemplate.find params[:doctmpl_id]
+
+    @formOptions = {action: :update, proj_id: params[:proj_id], id: params[:id], doctmpl_id: params[:doctmpl_id]}
   end
 
   # POST /documents
@@ -35,7 +40,7 @@ class DocumentsController < ApplicationController
 
     respond_to do |format|
       if @document.save
-        format.html { redirect_to documents_url, notice: 'Document was successfully created.' }
+        format.html { redirect_to controller: :documents, action: :index, id: params[:proj_id] }
         format.json { render :show, status: :created, location: @document }
       else
         format.html { render :new }
@@ -49,7 +54,7 @@ class DocumentsController < ApplicationController
   def update
     respond_to do |format|
       if @document.update(document_params)
-        format.html { redirect_to documents_url, notice: 'Document was successfully updated.' }
+        format.html { redirect_to action: :edit, proj_id: params[:proj_id], id: params[:id], doctmpl_id: params[:doctmpl_id] }
         format.json { render :index, status: :ok, location: @document }
       else
         format.html { render :edit }
@@ -61,9 +66,11 @@ class DocumentsController < ApplicationController
   # DELETE /documents/1
   # DELETE /documents/1.json
   def destroy
+    @document = Document.find params[:id]
+    @project = Project.find params[:proj_id]
     @document.destroy
     respond_to do |format|
-      format.html { redirect_to documents_url, notice: 'Document was successfully destroyed.' }
+      format.html { redirect_to controller: :documents, action: :index, id: @project.id, notice: 'Document was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

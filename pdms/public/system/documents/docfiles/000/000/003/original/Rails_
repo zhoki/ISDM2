@@ -1,0 +1,16 @@
+- เลือก Ruby ที่จะใช้งาน
+rvm list มาดูรายการ Ruby ในเครื่อง
+rvm use <installed ruby> เลือกขึ้นมาใช้
+
+- เรียก PostgreSQL console ขึ้นมาใช้งาน
+psql <DB NAME>
+- เปลี่ยน DB ที่จะทำงานด้วย
+(ภายใน psql) \c <DB NAME>
+
+DB Names:
+myrails_<development>
+
+git clone git@github.com:50kudos/outchill.git
+
+
+MySQL sock: /var/run/mysqld/mysqld.sock

@@ -2,7 +2,7 @@
   <li role="presentation"><%= link_to "Basic Info", project_path %></li>
   <li role="presentation" class="active"><%= link_to "Status", action: 'status', id: @project.id %></li>
   <li role="presentation"><%= link_to "Members", member_path(:project_id => @project.id) %></li>
-  <li role="presentation"><%= link_to "Documents", "/documents" %></li>
+  <li role="presentation"><%= link_to "Documents", controller: 'documents', action: 'index' %></li>
   <% if current_user.project_manager? %>
     <li role="presentation"><%= link_to "Assign Task", assigntaskindex_path(project_id: @project.id) %></li>
     <li role="presentation"><%= link_to "Tasks", tasklist_path(project_id: @project.id) %></li>

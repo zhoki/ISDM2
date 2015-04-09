@@ -24,6 +24,14 @@ class TasksController < ApplicationController
   def edit
   end
 
+  def submitForApproval
+    task = Task.where(project_id: params[:proj_id], id: params[:id]).first
+    task.task_status_id = 2
+    task.save
+
+    redirect_to controller: :tasks, action: :index
+  end
+
   # POST /tasks
   # POST /tasks.json
   def create

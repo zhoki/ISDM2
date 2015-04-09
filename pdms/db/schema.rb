@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150408155723) do
+ActiveRecord::Schema.define(version: 20150409165006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20150408155723) do
   end
 
   add_index "documents", ["document_template_id"], name: "index_documents_on_document_template_id", using: :btree
+  add_index "documents", ["project_id", "document_template_id"], name: "index_documents_on_project_id_and_document_template_id", unique: true, using: :btree
   add_index "documents", ["project_id"], name: "index_documents_on_project_id", using: :btree
   add_index "documents", ["user_id"], name: "index_documents_on_user_id", using: :btree
 

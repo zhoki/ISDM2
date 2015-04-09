@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
   resources :projects 
-   resources :documents do
+   resources :documents, except: [:index, :update] do
   resources :versions, only: [:destroy] do
     member do
       get :diff, to: 'versions#diff'
@@ -21,8 +21,6 @@ Rails.application.routes.draw do
     end
   end
 end
-
-  get 'documents/index'
 
   resources :tasks
   
@@ -43,9 +41,14 @@ end
 
   get 'projects/status/:id' => 'projects#status'
 
+  get 'projects/:id/documents' => 'documents#index'
   get 'documents/new/:proj_id/:doctmpl_id' => 'documents#new', as: :newdocument
+  get 'documents/delete/:proj_id/:id' => 'documents#destroy'
   get 'documents/edit/:proj_id/:id/:doctmpl_id' => 'documents#edit', as: :editdocument
   post 'documents/edit/:proj_id/:id/:doctmpl_id' => 'documents#edit'
+  patch 'documents/update/:proj_id/:id/:doctmpl_id' => 'documents#update'
+
+  get 'tasks/submit/:proj_id/:id' => 'tasks#submitForApproval'
 
   get 'templates/workflows/set/:doctmpl_id' => 'workflows#set'
   post 'templates/workflows/update/:doctmpl_id' => 'workflows#update', as: :workflowupdate
