@@ -19,7 +19,7 @@ class DocumentsController < ApplicationController
     @project = Project.find params[:proj_id]
     @doctmpl = DocumentTemplate.find params[:doctmpl_id]
 
-    @formOptions = {}
+    @formOptions = {action: :create, proj_id: @project.id, doctmpl_id: @doctmpl.id}
   end
 
   # GET /documents/1/edit

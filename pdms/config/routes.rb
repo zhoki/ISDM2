@@ -44,7 +44,7 @@ end
 
   get 'projects/:id/documents' => 'documents#index'
   get 'documents/new/:proj_id/:doctmpl_id' => 'documents#new', as: :newdocument
-  post 'documents/new/:proj_id/:doctmpl_id' => 'documents#new'
+  post 'documents/create/:proj_id/:doctmpl_id' => 'documents#create'
   get 'documents/delete/:proj_id/:id' => 'documents#destroy'
   get 'documents/edit/:proj_id/:id/:doctmpl_id' => 'documents#edit', as: :editdocument
   post 'documents/edit/:proj_id/:id/:doctmpl_id' => 'documents#edit'
