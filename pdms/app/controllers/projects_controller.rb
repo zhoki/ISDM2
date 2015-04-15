@@ -7,6 +7,7 @@ class ProjectsController < ApplicationController
   def index
     @projects = Project.all
     @users = User.all
+    @projects = @projects.paginate(:per_page => 5, :page => params[:page])
   end
 
   # GET /projects/1
