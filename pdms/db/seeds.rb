@@ -7,12 +7,12 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Create 3 essential roles
-#roleSysAdmin = Role.create name: 'System Administrator'
-#rolePM = Role.create name: 'Project Manager'
-#roleTM = Role.create name: 'Team Member'
+roleSysAdmin = Role.create name: 'System Administrator'
+rolePM = Role.create name: 'Project Manager'
+roleTM = Role.create name: 'Team Member'
 
 # Create a new system administrator account
-#sa = User.create email: 'sysadmin@pdms.ait.asia', password: 'sysadmin', role_id: 1
+sa = User.create email: 'sysadmin@pdms.ait.asia', password: 'sysadmin', role_id: 1
 
 # Create 4 initial processes in HR management
 proc1 = PmbokProcess.create name: 'Plan Human Resource Management'

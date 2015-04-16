@@ -46,6 +46,15 @@ group :development do
 	gem 'binding_of_caller' #provides alive shell on error page
 end
 
+group :test do
+  gem 'cucumber'
+  gem 'cucumber-rails'  
+  gem 'database_cleaner'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'webrat'
+end
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
