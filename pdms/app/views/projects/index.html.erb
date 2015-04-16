@@ -43,14 +43,14 @@
   </tbody>
 </table>
 <br>
+   <div class="apple_pagination">
+     <div class="page_info">
+       <%= page_entries_info @projects %>
+     </div>
+     <%= will_paginate @projects , :container => false %>
+   </div>
 <% end %>
      </div>
-  <div class="apple_pagination">
-    <div class="page_info">
-      <%= page_entries_info @projects %>
-    </div>
-    <%= will_paginate @projects , :container => false %>
-  </div>
 </div>
 
 
