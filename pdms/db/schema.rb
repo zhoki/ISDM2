@@ -31,15 +31,6 @@ ActiveRecord::Schema.define(version: 20150409165006) do
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
-  create_table "document_histories", force: true do |t|
-    t.string   "uploadedBy"
-    t.integer  "versionNumber"
-    t.string   "checksum"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "document_template_id"
-  end
-
   create_table "document_templates", force: true do |t|
     t.string   "name"
     t.string   "template_file_name"
@@ -125,8 +116,8 @@ ActiveRecord::Schema.define(version: 20150409165006) do
     t.datetime "updated_at"
     t.integer  "approver_id"
     t.integer  "assignee_id"
-    t.text     "remarks"
     t.integer  "document_template_id"
+    t.text     "remarks"
     t.integer  "task_status_id",       default: 1
   end
 

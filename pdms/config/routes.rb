@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'workflows/update'
   
   get 'projects/search'
+  
 
   ActiveAdmin.routes(self) 
 
@@ -13,7 +14,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
   resources :projects 
-   resources :documents, except: [:index, :update] do
+  resources :documents, except: [:index, :update] do
   resources :versions, only: [:destroy] do
     member do
       get :diff, to: 'versions#diff'
@@ -41,7 +42,7 @@ end
 
   get 'projects/status/:id' => 'projects#status'
 
-  get 'projects/:id/documents' => 'documents#index'
+  get 'projects/:id/documents' => 'documents#index', as: :indexdocument
   get 'documents/new/:proj_id/:doctmpl_id' => 'documents#new', as: :newdocument
   post 'documents/create/:proj_id/:doctmpl_id' => 'documents#create'
   get 'documents/delete/:proj_id/:id' => 'documents#destroy'

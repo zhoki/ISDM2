@@ -7,6 +7,11 @@
     </h3>
   </div>
 
+  <% if current_user && current_user.role_id == 2 %>
+      <div class="col-lg-12 text-right"><%= link_to 'New Project', new_project_path,
+                                                                       :class => "btn btn-default glyphicon glyphicon-plus"%></div>
+  <% end %>
+
  <% if current_user && (current_user.role_id == 2 || current_user.role_id == 3) %>
  <div class="row">
  <table class="table table-hover table-condensed">
@@ -37,14 +42,15 @@
     <% end %>
   </tbody>
 </table>
-
 <br>
-<% if current_user && current_user.role_id == 2 %>
-  <div class="col-lg-12 text-right"><%= link_to 'New Project', new_project_path,
-                                                     :class => "btn btn-default" %></div>
-<% end %>
 <% end %>
      </div>
+  <div class="apple_pagination">
+    <div class="page_info">
+      <%= page_entries_info @projects %>
     </div>
+    <%= will_paginate @projects , :container => false %>
+  </div>
+</div>
 
 

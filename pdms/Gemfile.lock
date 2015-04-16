@@ -261,12 +261,16 @@ GEM
       json (>= 1.8.0)
     warden (1.2.3)
       rack (>= 1.0)
+<<<<<<< HEAD
     webrat (0.7.3)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
       rack-test (>= 0.5.3)
     xpath (2.0.0)
       nokogiri (~> 1.3)
+=======
+    will_paginate (3.0.7)
+>>>>>>> 8fbc9b3f874284543157d8778797f59320f5a4f7
 
 PLATFORMS
   ruby
@@ -301,4 +305,8 @@ DEPENDENCIES
   therubyracer
   turbolinks
   uglifier (>= 1.3.0)
+<<<<<<< HEAD
   webrat
+=======
+  will_paginate
+>>>>>>> 8fbc9b3f874284543157d8778797f59320f5a4f7
