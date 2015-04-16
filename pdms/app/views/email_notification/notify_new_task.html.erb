@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>New task!</h1>
+
+    <p><%= "#{@user.firstName} #{@user.lastName}" %>, </p>
+    <br/>
+    <p>
+      We are delighted to inform you that you are assigned to work on a document called "<%= @task.document_template.name %>" for project "<%= @project.name %>".
+    </p>
+    <p>
+      For more information, please visit <a href="<%= url_for(controller: 'tasks', action: 'index', only_path: false) %>">this link</a>.
+    </p>
+
+    <br/>
+    <p>
+      May the odds be ever in your favor, <br/>
+      PDMS 
+    </p>
+  </body>
+</html>

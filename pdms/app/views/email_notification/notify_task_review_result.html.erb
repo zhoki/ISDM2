@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Review result: <%= if @task.task_status_id == 3 then 'APPROVED' else 'REJECTED' end %>!</h1>
+
+    <p><%= "#{@user.firstName} #{@user.lastName}" %>, </p>
+    <br/>
+    <p>
+      We are delighted to inform you that 
+      <% if @task.task_status_id == 3 %>
+        the task #<%= @task.id %> you submitted for approval has been approved! Good job!!!
+      <% else %>
+        the task #<%= @task.id %> you submitted for approval has been request for further revision!
+        <br/>
+        For reason: <%= simple_format @task.remarks %>
+
+        <br/> <br/>
+        Keep calm and revise the document! 
+      <% end %>
+    </p>
+
+    <br/>
+    <p>
+      May the odds be ever in your favor, <br/>
+      PDMS 
+    </p>
+  </body>
+</html>

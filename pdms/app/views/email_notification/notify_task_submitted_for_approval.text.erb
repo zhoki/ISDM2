@@ -1,0 +1,12 @@
+A task to review!
+
+<%= "#{@pm.firstName} #{@pm.lastName}" %>, 
+
+We are delighted to inform you that <%= "#{@task.assignee.firstName} #{@task.assignee.lastName}" %> has submitted task #<%= @task.id %> which belongs to project "<%= @project.name %>" for approval.
+
+
+For more information, please visit this link: <%= url_for(controller: 'projects', action: 'tasks', only_path: false, id: @project.id) %>
+
+
+Please have some mercy on this poor soul, <br/>
+PDMS 

@@ -29,6 +29,11 @@ class TasksController < ApplicationController
     task.task_status_id = 2
     task.save
 
+    project = Project.find params[:proj_id]
+    pm = User.where(['"firstName" || \' \' || "lastName" = ?', "#{project.pm}"]).first
+
+    EmailNotification.notify_task_submitted_for_approval(pm, task, project).deliver
+
     redirect_to controller: :tasks, action: :index
   end
 

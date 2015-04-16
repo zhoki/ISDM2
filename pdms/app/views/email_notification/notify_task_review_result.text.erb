@@ -1,0 +1,22 @@
+Review result: <%= if @task.task_status_id == 3 then 'APPROVED' else 'REJECTED' end %>!
+
+<%= "#{@user.firstName} #{@user.lastName}" %>, 
+
+
+We are delighted to inform you that 
+<% if @task.task_status_id == 3 %>
+the task #<%= @task.id %> you submitted for approval has been approved! Good job!!!
+<% else %>
+the task #<%= @task.id %> you submitted for approval has been request for further revision!
+
+
+For reason: <%= @task.remarks %>
+
+
+Keep calm and revise the document! 
+<% end %>
+
+
+
+May the odds be ever in your favor, 
+PDMS 

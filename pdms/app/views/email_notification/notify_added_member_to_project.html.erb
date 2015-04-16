@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Congratulations!</h1>
+
+    <p><%= "#{@user.firstName} #{@user.lastName}" %>, </p>
+    <br/>
+    <p>
+      We are delighted to inform you that you are added into project "<%= @project.name %>". Yay! 
+    </p>
+    <p>
+      For more information, please visit <a href="<%= url_for(controller: 'projects', action: 'show', only_path: false, id: @project.id) %>">this link</a>.
+    </p>
+
+    <br/>
+    <p>
+      May the odds be ever in your favor, <br/>
+      PDMS 
+    </p>
+  </body>
+</html>

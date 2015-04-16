@@ -80,6 +80,8 @@ class ProjectsController < ApplicationController
 
       task.save
 
+      EmailNotification.notify_new_task(assignee, task, @project).deliver
+
       redirect_to action: :tasks
     end
   end
@@ -114,11 +116,15 @@ class ProjectsController < ApplicationController
       task.remarks = ''
       task.task_status = newTaskStatus
       task.save
+
+      EmailNotification.notify_task_review_result(task.assignee, task, task.project).deliver
     elsif newTaskStatus.id == 4
       if remarks.strip.length > 0
         task.remarks = remarks
         task.task_status = newTaskStatus
         task.save
+
+      EmailNotification.notify_task_review_result(task.assignee, task, task.project).deliver
       else
         flash[:alert] = 'Error: remarks cannot be empty if you want to have this task revised.'
       end
@@ -162,6 +168,8 @@ class ProjectsController < ApplicationController
     if params[:user_id]
       @user = User.find(params[:user_id])
       if @project.users << @user and @project.save
+        EmailNotification.notify_added_member_to_project(@user, @project).deliver
+
         flash[:notice] = 'User was saved.'
       end
     end

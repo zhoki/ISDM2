@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>A task to review!</h1>
+
+    <p><%= "#{@pm.firstName} #{@pm.lastName}" %>, </p>
+    <br/>
+    <p>
+      We are delighted to inform you that <%= "#{@task.assignee.firstName} #{@task.assignee.lastName}" %> has submitted task #<%= @task.id %> which belongs to project "<%= @project.name %>" for approval.
+    </p>
+    <p>
+      For more information, please visit <a href="<%= url_for(controller: 'projects', action: 'tasks', only_path: false, id: @project.id) %>">this link</a>.
+    </p>
+
+    <br/>
+    <p>
+      Please have some mercy on this poor soul, <br/>
+      PDMS 
+    </p>
+  </body>
+</html>
