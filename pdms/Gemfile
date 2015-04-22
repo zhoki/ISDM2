@@ -46,13 +46,22 @@ group :development do
 	gem 'binding_of_caller' #provides alive shell on error page
 end
 
+#group :test do
+  #gem 'cucumber'
+  #gem 'cucumber-rails'  
+  #gem 'database_cleaner'
+  #gem 'rspec'
+  #gem 'rspec-rails'
+  #gem 'webrat'
+#end
+
 group :test do
-  gem 'cucumber'
-  gem 'cucumber-rails'  
+  gem 'cucumber-rails', :require => false
+  # database_cleaner is not required, but highly recommended
   gem 'database_cleaner'
-  gem 'rspec'
+  gem 'factory_girl'
+  gem 'launchy'
   gem 'rspec-rails'
-  gem 'webrat'
 end
 
 gem 'will_paginate'
