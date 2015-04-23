@@ -41,8 +41,8 @@ Then(/^a modal dialogue for approving or rejecting task should appear$/) do
 end
 
 When(/^I choose to approve this task and click Respond button$/) do
-  @approved_status = FactoryGirl.build :approved_status
-  visit "#{respond_task_path(@project)}?task_id=#{@task.id}&respondedStatusID=3"
+  select "Approved", from: "respondedStatusID"
+  find('input[type=submit]#btnSubmitResponse').click
 end
 
 Then(/^the status of the task should be changed to Approved$/) do
@@ -51,7 +51,9 @@ Then(/^the status of the task should be changed to Approved$/) do
 end
 
 When(/^I choose to reject this task, fill in remarks, and click Respond button$/) do
-  visit "#{respond_task_path(@project)}?task_id=#{@task.id}&respondedStatusID=4&remarks=blahblah"
+  select "Revise", from: "respondedStatusID"
+  fill_in "Remarks", with: "A testing remark from cucumber testing!"
+  find('input[type=submit]#btnSubmitResponse').click
 end
 
 Then(/^the status of the task should be changed to Revise$/) do

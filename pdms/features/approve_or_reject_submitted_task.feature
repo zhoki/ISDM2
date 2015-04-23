@@ -5,6 +5,7 @@ Feature: Approve or reject submitted task
     Task that is approved will have its status changed to 'Approved'
     Task that is rejected will have its status changed to 'Revise'
 
+@javascript
 Scenario: Project Manager approves the submitted task
   Given I am a project manager
   And I am signed in
@@ -23,6 +24,7 @@ Scenario: Project Manager approves the submitted task
   When I choose to approve this task and click Respond button
   Then the status of the task should be changed to Approved
 
+@javascript
 Scenario: Project Manager rejects the submitted task
   Given I am a project manager
   And I am signed in

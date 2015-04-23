@@ -95,6 +95,8 @@ class ProjectsController < ApplicationController
         t.approver = FactoryGirl.build :project_manager
         t.assignee = FactoryGirl.build :team_member
       end
+
+      @taskStatus = [FactoryGirl.build(:approved_status), FactoryGirl.build(:revise_status)]
     end
   end
 
