@@ -65,6 +65,5 @@ When(/^I submit the form$/) do
 end
 
 Then(/^I should see the member I just added in the list$/) do
-  save_and_open_page
   expect(page).to have_content "#{@team_member.firstName} #{@team_member.lastName}"
 end

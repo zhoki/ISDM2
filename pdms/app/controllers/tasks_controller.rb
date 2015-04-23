@@ -26,7 +26,13 @@ class TasksController < ApplicationController
 
   def submitForApproval
     task = Task.where(project_id: params[:proj_id], id: params[:id]).first
-    task.task_status_id = 2
+
+    if not Rails.env.test?
+      task.task_status_id = 2
+    else
+      task.task_status = FactoryGirl.build :submitted_for_approval_status
+    end
+
     task.save
 
     project = Project.find params[:proj_id]
