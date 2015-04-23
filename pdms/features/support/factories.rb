@@ -42,7 +42,7 @@ FactoryGirl.define do
     lastName "ProjectManager"
     password "password"
     password_confirmation "password"
-    association :role, factory: :project_manager_role
+    association :role, factory: :project_manager_role, strategy: :build
   end
 
   factory :team_member, class: User do
@@ -51,7 +51,7 @@ FactoryGirl.define do
     lastName "TeamMember"
     password "password"
     password_confirmation "password"
-    association :role, factory: :member_role
+    association :role, factory: :member_role, strategy: :build
   end
 
   factory :document_template, class: DocumentTemplate do
@@ -66,7 +66,7 @@ FactoryGirl.define do
     # association :assignee, factory: :team_member, strategy: :build
     association :task_status, factory: :in_progress_status, strategy: :build
     association :document_template, factory: :document_template
-    remarks ""
+    remarks " "
   end
 
   factory :project, aliases: [:test_project], class: Project do

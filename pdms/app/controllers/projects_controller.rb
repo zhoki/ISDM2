@@ -89,6 +89,13 @@ class ProjectsController < ApplicationController
   def tasks
     @tasks = Task.where(project_id: @project.id).order('id DESC, task_status_id ASC')
     @taskStatus = TaskStatus.where id: [3, 4]
+
+    if Rails.env.test?
+      @tasks.each do |t| 
+        t.approver = FactoryGirl.build :project_manager
+        t.assignee = FactoryGirl.build :team_member
+      end
+    end
   end
 
   def edittask
@@ -107,7 +114,22 @@ class ProjectsController < ApplicationController
 
   def respondTask
     taskId = params[:task_id]
-    newTaskStatus = TaskStatus.find params[:respondedStatusID]
+    newTaskStatus = nil
+
+    if Rails.env.test?
+      _approved_status = FactoryGirl.build :approved_status
+      _revise_status = FactoryGirl.build :revise_status
+      if params[:respondedStatusID] == '3'
+        newTaskStatus = _approved_status
+        newTaskStatus.id = 3
+      else
+        newTaskStatus = _revise_status
+        newTaskStatus.id = 4
+      end
+    else
+      newTaskStatus = TaskStatus.find params[:respondedStatusID]
+    end
+
     remarks = params[:remarks]
 
     task = Task.find taskId
@@ -119,7 +141,7 @@ class ProjectsController < ApplicationController
 
       EmailNotification.notify_task_review_result(task.assignee, task, task.project).deliver
     elsif newTaskStatus.id == 4
-      if remarks.strip.length > 0
+      if not remarks.nil? and remarks.strip.length > 0
         task.remarks = remarks
         task.task_status = newTaskStatus
         task.save

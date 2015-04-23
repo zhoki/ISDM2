@@ -39,6 +39,7 @@ end
   post 'projects/:id/createtask' => 'projects#createtask', as: :createtask
   get 'projects/:id/member/remove_member' => 'projects#remove_member', as: :remove_member
   post 'projects/:id/respondtask/' => 'projects#respondTask'
+  get 'projects/:id/respondtask/' => 'projects#respondTask', as: :respond_task
 
   get 'projects/status/:id' => 'projects#status'
 
