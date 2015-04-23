@@ -6,6 +6,7 @@ end
 
 Given(/^I want to add a task to a member$/) do
   @team_member = FactoryGirl.create :team_member
+  @project.users << @team_member
 end
 
 When(/^I visit the assign task page$/) do
@@ -22,14 +23,15 @@ Then(/^I should see a form to add a task to a member$/) do
 end
 
 When(/^I submit the "([^"]*)" form$/) do |arg1|
-   click_button "Assign task"
+  select "#{@team_member.firstName} #{@team_member.lastName}", from: "assignee_id"
+  click_button "Assign task"
 end
 
 Then(/^I should see the details of the task list$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  expect(page).to have_selector 'tr[id^=rowTaskId_]'
 end
 
 Then(/^I should see the task added to the member$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  expect(find('tr[id^=rowTaskId_]')).to have_content "#{@team_member.firstName} #{@team_member.lastName}"
 end
 
